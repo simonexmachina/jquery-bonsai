@@ -1,0 +1,114 @@
+<html>
+<head>
+<meta http-equiv="content-type" content="text/html;charset=utf-8" />	
+<script src="http://code.jquery.com/jquery-latest.min.js"></script>
+<script src="jquery.bonsai.js"></script>
+<link rel="stylesheet" type="text/css" href="jquery.bonsai.css" />
+<script src="../jquery.tristate/jquery.tristate.js"></script>
+<style>
+body {
+    font-family: 'Helvetica Neue';
+    font-size: 14px;
+}
+</style>
+<script>
+jQuery(function($) {
+	$('#music').bonsai();
+	$('#checkboxes').bonsai({
+		checkboxes: true // depends on jquery.tristate from https://github.com/jlbruno/jQuery-Tristate-Checkbox-plugin
+	});
+});
+</script>
+</head>
+<body>
+<h1>jQuery Bonsai</h1>
+<h2>A Tree</h2>
+<ul id="music">
+<li>Instrumental Ensembles
+<ul>
+<li>String section</li>
+<li>Brass and/or Horns sections</li>
+<li>Percussion Sections</li>
+</ul>
+</li>
+<li class="expanded">Individual Instruments
+<ul>
+<li>Bass Guitar</li>
+<li>Contrabass</li>
+<li>Drums</li>
+<li>Cymbals</li>
+<li>Guitar - Either</li>
+<li>Guitar (Acoustic)</li>
+<li>Guitar (Electric)</li>
+<li>Keyboarded
+<ul>
+<li>Accordion</li>
+<li>Harpsichord</li>
+<li>Organ</li>
+<li>Piano</li>
+<li>Synth
+<ul>
+<li>Imitative Synthesis</li>
+</ul>
+</li>
+</ul>
+</li>
+<li>Non-Pitched Percussion
+<ul>
+<li>Hand Percussion</li>
+</ul>
+</li>
+<li>Horns
+<ul>
+<li>Trombone</li>
+<li>Trumpet</li>
+</ul>
+</li>
+<li>Idiophone</li>
+<li>String</li>
+<li>Woodwind
+<ul>
+<li>Sax
+<ul>
+<li>Soprano</li>
+<li>Alto</li>
+<li>Tenor</li>
+<li>Baritone</li>
+</ul>
+</li>
+</ul>
+</li>
+<li>Other</li>
+</ul>
+</li>
+<li>Lyrical content</li>
+<li>Vocals
+<ul>
+<li>Male</li>
+<li>Female</li>
+</ul>
+</li>
+<li>Elements</li>
+<li>Other</li>
+</ul>
+<h2>Checkboxes</h2>
+<ol id="checkboxes">
+	<li class="expanded"><input type="checkbox" /> All
+		<ol>
+		    <li><input type="checkbox" /> One</li>
+		    <li>
+		        <input type="checkbox" /> Two
+		        <ol>
+		            <li>
+		            	<input type="checkbox" /> Three
+		                <ol>
+		                    <li><input type="checkbox" /> Four</li>
+		                </ol>
+		            </li>
+		            <li><input type="checkbox" /> Five</li>
+		        </ol>
+		    </li>
+		</ol>
+	</li>
+</ol>
+</body>
