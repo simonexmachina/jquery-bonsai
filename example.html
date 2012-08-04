@@ -12,47 +12,20 @@
 		font-size: 14px;
 	}
 	</style>
-	<script>
-	jQuery(function() {
-		$('#music').bonsai();
-		$('#checkboxes').bonsai({
-			expandAll: true,
-			checkboxes: true // depends on jquery.qubit plugin
-		});
-		$('#auto-checkboxes').bonsai({
-			expandAll: true,
-			checkboxes: true, // depends on jquery.qubit plugin
-			createCheckboxes: true, // takes values from data-name and data-value, and data-name is inherited
-		});
-		$('#from-JSON').jsonList({
-			url: 'example.json',
-			type: 'groupedItems',
-			groups: 'locationGroups',
-			items: 'locations',
-			// onListItem: called for each list item created from the JSON
-			onListItem: function(listItem, data, isGroup) {
-				if( !isGroup )
-					// set the id into a data value so that Bonsai createCheckboxes
-					// can set the checkbox value
-					listItem.attr('data-value', data.id);
-			},
-			// success: called after the list is created
-			success: function(jsonList) {
-				// turn the list into a tree
-				$('> ol', this).bonsai({
-					checkboxes: true,
-					createCheckboxes: true,
-					handleDuplicateCheckboxes: true,
-					expandAll: true
-				});
-			}
-		});
-	});
-	</script>
 </head>
 <body>
 	<h1>jQuery Bonsai</h1>
-	<h2>A Simple Tree from a Nested List</h2>
+	<p>Lightweight jQuery plugin that takes a big nested list and prunes it 
+		down to a small expandable tree control.</p>
+	<h2>Tree from a Nested List</h2>
+<pre>
+$('#music').bonsai();
+</pre>
+	<script>
+	jQuery(function() {
+		$('#music').bonsai();
+	});
+	</script>
 	<ul id='music'>
 		<li>Instrumental Ensembles
 			<ul>
@@ -123,7 +96,20 @@
 	</ul>
 	<h2>A Tree with Checkbox Semantics</h2>
 	<p>Checkboxes are handled using the jQuery Qubit library.</p>
-	<h3>Using Checkboxes in Markup</h3>
+	<h3>From Checkboxes in Markup</h3>
+<pre>
+$('#checkboxes').bonsai({
+	expandAll: true,
+	checkboxes: true // depends on jquery.qubit plugin
+});
+</pre>
+	<script>
+	jQuery(function() {
+		$('#checkboxes').bonsai({
+			checkboxes: true // depends on jquery.qubit plugin
+		});
+	});
+	</script>
 	<ol id='checkboxes'>
 		<li class='expanded'><input type='checkbox' /> All
 			<ol>
@@ -147,6 +133,20 @@
 	<p>Creates checkboxes for each list item. The name and value for the checkboxes 
 		are taken from data-name and data-value. The name is inherited from parent 
 		items if not specified. Checked state can be indicated using data-checked.</p>
+<pre>
+$('#checkboxes').bonsai({
+	expandAll: true,
+	checkboxes: true // depends on jquery.qubit plugin
+});
+</pre>
+	<script>
+	jQuery(function() {
+		$('#auto-checkboxes').bonsai({
+			checkboxes: true, // depends on jquery.qubit plugin
+			createCheckboxes: true, // takes values from data-name and data-value, and data-name is inherited
+		});
+	});
+	</script>
 	<ol id='auto-checkboxes' data-name='foo'>
 		<li class='expanded' data-value='0'>All
 			<ol>
@@ -193,6 +193,33 @@ $('#from-JSON').jsonList({
 	}
 });
 </pre>
+	<script>
+	$(function() {
+		$('#from-JSON').jsonList({
+			url: 'example.json',
+			type: 'groupedItems',
+			groups: 'locationGroups',
+			items: 'locations',
+			// onListItem: called for each list item created from the JSON
+			onListItem: function(listItem, data, isGroup) {
+				if( !isGroup )
+					// set the id into a data value so that Bonsai createCheckboxes
+					// can set the checkbox value
+					listItem.attr('data-value', data.id);
+			},
+			// success: called after the list is created
+			success: function(jsonList) {
+				// turn the list into a tree
+				$('> ol', this).bonsai({
+					checkboxes: true,
+					createCheckboxes: true,
+					handleDuplicateCheckboxes: true,
+					expandAll: true
+				});
+			}
+		});
+	});
+	</script>
 	<div id="from-JSON"></div>
 </body>
 </html>
