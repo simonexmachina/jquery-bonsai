@@ -100,24 +100,32 @@
 			}
 		},
 		expand: function( listItem ) {
+			this.setExpanded(listItem, true);
+		},
+		collapse: function( listItem ) {
+			this.setExpanded(listItem, false);
+		},
+		setExpanded: function( listItem, expanded ) {
 			listItem = $(listItem);
 			if( listItem.length > 1 ) {
 				var self = this;
 				listItem.each(function() {
-					self.expand(this);
+					self.setExpanded(this, expanded);
 				});
 				return;
 			}
-			if( !listItem.data('subList') )
-				return;
-			listItem = $(listItem).addClass('expanded')
-				.removeClass('collapsed');
-			$(listItem.data('subList')).css('height', 'auto');
-		},
-		collapse: function( listItem ) {
-			listItem = $(listItem).addClass('collapsed')
-				.removeClass('expanded');
-			$(listItem.data('subList')).height(0);
+			if( expanded ) {
+				if( !listItem.data('subList') )
+					return;
+				listItem = $(listItem).addClass('expanded')
+					.removeClass('collapsed');
+				$(listItem.data('subList')).css('height', 'auto');
+			}
+			else {
+				listItem = $(listItem).addClass('collapsed')
+					.removeClass('expanded');
+				$(listItem.data('subList')).height(0);
+			}
 		},
 		expandAll: function() {
 			this.expand($('li', this.el));
