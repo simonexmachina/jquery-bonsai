@@ -7,8 +7,7 @@
 	};
 	var Bonsai = function( el, options ) {
 		var self = this,
-			// fill options with default values
-			options = $.extend({
+			defaults = {
 				expandAll: false, // boolean expands all items
 				expand: null, // function to expand an item
 				collapse: null, // function to collapse an item
@@ -25,7 +24,8 @@
 				// handleDuplicateCheckboxes: adds onChange bindings to update 
 				// any other checkboxes that have the same value.
 				handleDuplicateCheckboxes: false
-			}, options),
+			},
+			options = $.extend(defaults, options),
 			checkboxes, isRootNode;
 		this.el = el = $(el);
 		// store the scope in the options for child nodes
@@ -234,6 +234,14 @@
 					})
 				)
 				.insertAfter(this.el);
+		},
+		setCheckedValues: function( values ) {
+			var all = this.options.scope.find('input[type=checkbox]');
+			$.each(values, function(key, value) {
+				all.filter('[value="' + value + '"]')
+					.prop('checked', true)
+					.trigger('change');
+			});
 		}
 	};
 	$.extend(Bonsai, {
