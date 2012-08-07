@@ -158,28 +158,34 @@
 			}
 		},
 		handleDuplicates: function( checkbox ) {
-			var self = this;
+			var self = this,
+				checkbox = $(checkbox);
 			checkbox.bind('change', function(e) {
-				if( !e.duplicatesHandled ) {
-					if( this.value ) {
-						// select all duplicate checkboxes within the same scope
-						$('input[type=checkbox]', self.options.scope)
-							.filter('[value="' + this.value + '"]')
+				var isChecked = checkbox.prop('checked');
+				if( this.value ) {
+					var id = this.id;
+					e.duplicateIds = e.duplicateIds || [];
+					e.duplicateIds.push(id);
+					// select all duplicate checkboxes within the same scope
+					self.options.scope
+						.find('input[type=checkbox]')
+						.filter('[value="' + $(checkbox).attr('value') + '"]'
+							+ (isChecked ? ':not(:checked)' : ':checked'))
+						.filter(function() {
+							return e.duplicateIds.indexOf(this.id) == -1;
+						})
+						.each(function() {
 							// copy checked and indeterminate to the duplicate
-							.prop({
-								checked: $(this).prop('checked'),
-								indeterminate: $(this).prop('indeterminate')
-							})
-							// and trigger their change event to update any parents
-							.filter(function() {
-								// but avoid a loop
-								return this != e.target;
-							})
-							.trigger({
-								type: 'change',
-								duplicatesHandled: true
-							});
-					}
+							$(this).prop({
+									checked: isChecked,
+									indeterminate: $(this).prop('indeterminate')
+								})
+								.trigger({
+									type: 'change',
+									duplicateIds: e.duplicateIds,
+									doneIds: e.doneIds
+								});
+						});
 				}
 				return true;					
 			});
