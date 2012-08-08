@@ -5,27 +5,27 @@
 			$(this).data('bonsai', bonsai);
 		});
 	};
+	$.bonsai.defaults = {
+		expandAll: false, // boolean expands all items
+		expand: null, // function to expand an item
+		collapse: null, // function to collapse an item
+		checkboxes: false, // requires jquery.qubit
+		// createCheckboxes: creates checkboxes for each list item.
+		// 
+		// The name and value for the checkboxes can be declared in the
+		// markup using `data-name` and `data-value`.
+		// 
+		// The name is inherited from parent items if not specified.
+		// 
+		// Checked state can be indicated using `data-checked`.
+		createCheckboxes: false,
+		// handleDuplicateCheckboxes: adds onChange bindings to update 
+		// any other checkboxes that have the same value.
+		handleDuplicateCheckboxes: false
+	};
 	var Bonsai = function( el, options ) {
 		var self = this,
-			defaults = {
-				expandAll: false, // boolean expands all items
-				expand: null, // function to expand an item
-				collapse: null, // function to collapse an item
-				checkboxes: false, // requires jquery.qubit
-				// createCheckboxes: creates checkboxes for each list item.
-				// 
-				// The name and value for the checkboxes can be declared in the
-				// markup using `data-name` and `data-value`.
-				// 
-				// The name is inherited from parent items if not specified.
-				// 
-				// Checked state can be indicated using `data-checked`.
-				createCheckboxes: false,
-				// handleDuplicateCheckboxes: adds onChange bindings to update 
-				// any other checkboxes that have the same value.
-				handleDuplicateCheckboxes: false
-			},
-			options = $.extend(defaults, options),
+			options = $.extend({}, $.bonsai.defaults, options),
 			checkboxes, isRootNode;
 		this.el = el = $(el);
 		// store the scope in the options for child nodes
