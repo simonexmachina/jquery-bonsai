@@ -21,7 +21,8 @@
 		createCheckboxes: false,
 		// handleDuplicateCheckboxes: adds onChange bindings to update 
 		// any other checkboxes that have the same value.
-		handleDuplicateCheckboxes: false
+		handleDuplicateCheckboxes: false,
+		selectAllExclude: null
 	};
 	var Bonsai = function( el, options ) {
 		var self = this,
@@ -220,11 +221,20 @@
 				.insertBefore(this.el);
 		},
 		addSelectAll: function() {
-			var scope = this.options.scope;
+			var scope = this.options.scope,
+				self = this;
+			function getCheckboxes() {
+				// return all checkboxes that are not in hidden list items
+				return scope.find('li')
+					.filter(self.options.selectAllExclude || function() {
+						return $(this).css('display') != 'none';
+					})
+					.find('> input[type=checkbox]');
+			}
 			$('<div class="check-all">')
 				.append($('<a class="all">Select all</a>')
 					.bind('click', function() {
-						$('input[type=checkbox]', scope).prop({
+						getCheckboxes().prop({
 							checked: true,
 							indeterminate: false
 						});
@@ -233,7 +243,7 @@
 				.append('<i class="separator"></i>')
 				.append($('<a class="none">Select none</a>')
 					.bind('click', function() {
-						$('input[type=checkbox]', scope).prop({
+						getCheckboxes().prop({
 							checked: false,
 							indeterminate: false
 						});
