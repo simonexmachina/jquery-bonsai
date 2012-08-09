@@ -5,6 +5,7 @@
 			$(this).data('bonsai', bonsai);
 		});
 	};
+	$.bonsai = {};
 	$.bonsai.defaults = {
 		expandAll: false, // boolean expands all items
 		expand: null, // function to expand an item
