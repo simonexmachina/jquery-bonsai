@@ -171,7 +171,7 @@
 					// select all duplicate checkboxes within the same scope
 					self.options.scope
 						.find('input[type=checkbox]')
-						.filter('[value="' + $(checkbox).attr('value') + '"]'
+						.filter('[value="' + $(checkbox).attr('value') + '"][name="' + $(checkbox).attr('name') + '"]'
 							+ (isChecked ? ':not(:checked)' : ':checked'))
 						.filter(function() {
 							return e.duplicateIds.indexOf(this.id) == -1;
