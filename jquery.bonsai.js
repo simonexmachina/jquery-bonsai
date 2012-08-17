@@ -209,12 +209,14 @@
 				scope = this.options.scope;
 			$('<div class="expand-all">')
 				.append($('<a class="all">Expand all</a>')
+					.css('cursor', 'pointer')
 					.bind('click', function() {
 						self.expandAll();
 					})
 				)
 				.append('<i class="separator"></i>')
 				.append($('<a class="none">Collapse all</a>')
+					.css('cursor', 'pointer')
 					.bind('click', function() {
 						self.collapseAll();
 					})
@@ -234,6 +236,7 @@
 			}
 			$('<div class="check-all">')
 				.append($('<a class="all">Select all</a>')
+					.css('cursor', 'pointer')
 					.bind('click', function() {
 						getCheckboxes().prop({
 							checked: true,
@@ -243,6 +246,7 @@
 				)
 				.append('<i class="separator"></i>')
 				.append($('<a class="none">Select none</a>')
+					.css('cursor', 'pointer')
 					.bind('click', function() {
 						getCheckboxes().prop({
 							checked: false,
