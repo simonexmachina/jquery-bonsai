@@ -1,0 +1,9 @@
+pre {
+	color: #ccc;
+}
+ol.bonsai {
+	margin-bottom: 1em;
+}
+.bonsai ol {
+	margin-bottom: 0;
+}
