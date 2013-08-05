@@ -258,9 +258,9 @@ $('#from-JSON').jsonList({
           listItem.attr('data-value', data.id);
       },
       // success: called after the list is created
-      success: function(jsonList) {
+      onSuccess: function(jsonList) {
         // turn the list into a tree
-        $('> ol', this).bonsai({
+        $(this.el).find('> ol').bonsai({
           checkboxes: true,
           createCheckboxes: true,
           handleDuplicateCheckboxes: true,
