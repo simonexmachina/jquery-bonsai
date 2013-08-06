@@ -55,14 +55,14 @@ $('#music').bonsai();
   });
   </script>
   <ol id='music'>
-    <li>Instrumental Ensembles
+    <li class='expanded'>Instrumental Ensembles
       <ul>
         <li>String section</li>
         <li>Brass and/or Horns sections</li>
         <li>Percussion Sections</li>
       </ul>
     </li>
-    <li class='expanded'>Individual Instruments
+    <li>Individual Instruments
       <ul>
         <li>Bass Guitar</li>
         <li>Contrabass</li>
@@ -175,21 +175,21 @@ $('#checkboxes').bonsai({
     });
   });
   </script>
-  <pre>
-&lt;ol id='auto-checkboxes' data-name='foo'>
-  &lt;li class='expanded' data-value='0'>All
+  <pre class="code">
+&lt;ol id='auto-checkboxes' <em>data-name='foo'</em>>
+  &lt;li class='expanded' <em>data-value='0'</em>>All
     &lt;ol>
-      &lt;li data-value='1'>One&lt;/li>
-      &lt;li data-value='2'>
+      &lt;li <em>data-value='1'</em>>One&lt;/li>
+      &lt;li <em>data-value='2'</em>>
         Two
         &lt;ol>
-          &lt;li data-name='baz' data-value='3'>
+          &lt;li <em>data-name='baz'</em> <em>data-value='3'</em>>
             Three
             &lt;ol>
-              &lt;li data-name='baz' data-value='4' data-checked='1'>Four&lt;/li>
+              &lt;li <em>data-name='baz'</em> <em>data-value='4'</em> <em>data-checked='1'</em>>Four&lt;/li>
             &lt;/ol>
           &lt;/li>
-          &lt;li data-value='5'>Five&lt;/li>
+          &lt;li <em>data-value='5'</em>>Five&lt;/li>
         &lt;/ol>
       &lt;/li>
     &lt;/ol>

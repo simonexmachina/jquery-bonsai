@@ -11,3 +11,8 @@ ol.bonsai,
 ul.bonsai {
 	transition: 1s ease height;
 }
+.code em {
+	font-weight: bold;
+	font-style: normal;
+	color: #FFF0B2;
+}
