@@ -1,6 +1,3 @@
-pre {
-	color: #ccc;
-}
 ol.bonsai {
 	margin-bottom: 1em;
 }
@@ -14,5 +11,5 @@ ul.bonsai {
 .code em {
 	font-weight: bold;
 	font-style: normal;
-	color: #FFF0B2;
+	color: #39c;
 }

@@ -1,181 +1,172 @@
 <!doctype html>
 <html>
-  <head>
-    <meta charset="utf-8">
-    <meta http-equiv="X-UA-Compatible" content="chrome=1">
-    <title>jQuery Bonsai by simonwade</title>
-    <link rel="stylesheet" href="stylesheets/styles.css">
-    <link rel="stylesheet" href="stylesheets/custom.css">
-    <link rel="stylesheet" href="stylesheets/pygment_trac.css">
-    <link rel='stylesheet' type='text/css' href='https://github.jspm.io/simonwade/jquery-bonsai@master/jquery.bonsai.css' />
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js"></script>
-    <script src='https://github.jspm.io/simonwade/jquery-bonsai@master/jquery.bonsai.js'></script>
-    <script src='https://github.jspm.io/simonwade/jquery-qubit@master/jquery.qubit.js'></script>
-    <script src='https://github.jspm.io/simonwade/jquery-json-list@master/jquery.json-list.js'></script>
-    <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no">
-  </head>
-  <body>
-
-      <header>
-        <h1>jQuery Bonsai</h1>
-        <p>Super lightweight jQuery tree plugin</p>
-      </header>
-
-      <div id="banner">
-        <span id="logo"></span>
-
-        <a href="https://github.com/simonwade/jquery-bonsai" class="button fork"><strong>View On GitHub</strong></a>
-        <div class="downloads">
-          <span>Downloads:</span>
-          <ul>
-            <li><a href="https://github.com/simonwade/jquery-bonsai/zipball/master" class="button">ZIP</a></li>
-            <li><a href="https://github.com/simonwade/jquery-bonsai/tarball/master" class="button">TAR</a></li>
-          </ul>
-        </div>
-      </div><!-- end banner -->
-
-    <div class="wrapper">
-      <nav>
-        <ul></ul>
-      </nav>
-      <section>
-  <h1>jQuery Bonsai</h1>
-  <p>Lightweight jQuery plugin that takes a big nested list and prunes it 
-    down to a small expandable tree control.</p>
-  <p>Also includes support for checkboxes 
-    (including 'indeterminate' state) and for populating the tree using a 
-    JSON data source.</p>
-  <h2>Create a Collapsible Tree from a Nested List</h2>
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="chrome=1">
+  <title>jQuery Bonsai by aexmachina</title>
+  <link rel="stylesheet" href="stylesheets/styles.css">
+  <link rel="stylesheet" href="stylesheets/custom.css">
+  <link rel="stylesheet" href="stylesheets/pygment_trac.css">
+  <link rel='stylesheet' type='text/css' href='https://github.jspm.io/aexmachina/jquery-bonsai@master/jquery.bonsai.css' />
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js"></script>
+  <script src='https://github.jspm.io/aexmachina/jquery-bonsai@master/jquery.bonsai.js'></script>
+  <script src='https://github.jspm.io/aexmachina/jquery-qubit@master/jquery.qubit.js'></script>
+  <script src='https://github.jspm.io/aexmachina/jquery-json-list@master/jquery.json-list.js'></script>
+  <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no">
+  <!--[if lt IE 9]>
+  <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+  <![endif]-->
+</head>
+<body>
+  <div class="wrapper">
+    <header>
+      <h1>jQuery Bonsai</h1>
+      <p>Super lightweight jQuery tree plugin</p>
+      <p class="view"><a href="http://github.com/aexmachina/jquery-bonsai">View the Project on GitHub <small>aexmachina/jquery-bonsai</small></a></p>
+      <ul>
+        <li><a href="https://github.com/aexmachina/jquery-bonsai/zipball/master">Download <strong>ZIP File</strong></a></li>
+        <li><a href="https://github.com/aexmachina/jquery-bonsai/tarball/master">Download <strong>TAR Ball</strong></a></li>
+        <li><a href="http://github.com/aexmachina/jquery-bonsai">Fork On <strong>GitHub</strong></a></li>
+      </ul>
+    </header>
+    <section>
+      <h1>jQuery Bonsai</h1>
+      <p>Lightweight jQuery plugin that takes a big nested list and prunes it 
+        down to a small expandable tree control.</p>
+      <p>Also includes support for checkboxes 
+        (including 'indeterminate' state) and for populating the tree using a 
+        JSON data source.</p>
+      <h2>Create a Collapsible Tree from a Nested List</h2>
 <pre>
 $('#music').bonsai();
 </pre>
-  <script>
-  jQuery(function() {
-    $('#music').bonsai();
-  });
-  </script>
-  <ol id='music'>
-    <li class='expanded'>Instrumental Ensembles
-      <ul>
-        <li>String section</li>
-        <li>Brass and/or Horns sections</li>
-        <li>Percussion Sections</li>
-      </ul>
-    </li>
-    <li>Individual Instruments
-      <ul>
-        <li>Bass Guitar</li>
-        <li>Contrabass</li>
-        <li>Drums</li>
-        <li>Cymbals</li>
-        <li>Guitar - Either</li>
-        <li>Guitar (Acoustic)</li>
-        <li>Guitar (Electric)</li>
-        <li>Keyboarded
+      <script>
+      jQuery(function() {
+        $('#music').bonsai();
+      });
+      </script>
+      <ol id='music'>
+        <li class='expanded'>Instrumental Ensembles
           <ul>
-            <li>Accordion</li>
-            <li>Harpsichord</li>
-            <li>Organ</li>
-            <li>Piano</li>
-            <li>Synth
+            <li>String section</li>
+            <li>Brass and/or Horns sections</li>
+            <li>Percussion Sections</li>
+          </ul>
+        </li>
+        <li>Individual Instruments
+          <ul>
+            <li>Bass Guitar</li>
+            <li>Contrabass</li>
+            <li>Drums</li>
+            <li>Cymbals</li>
+            <li>Guitar - Either</li>
+            <li>Guitar (Acoustic)</li>
+            <li>Guitar (Electric)</li>
+            <li>Keyboarded
               <ul>
-                <li>Imitative Synthesis</li>
+                <li>Accordion</li>
+                <li>Harpsichord</li>
+                <li>Organ</li>
+                <li>Piano</li>
+                <li>Synth
+                  <ul>
+                    <li>Imitative Synthesis</li>
+                  </ul>
+                </li>
               </ul>
             </li>
-          </ul>
-        </li>
-        <li>Non-Pitched Percussion
-          <ul>
-            <li>Hand Percussion</li>
-          </ul>
-        </li>
-        <li>Horns
-          <ul>
-            <li>Trombone</li>
-            <li>Trumpet</li>
-          </ul>
-        </li>
-        <li>Idiophone</li>
-        <li>String</li>
-        <li>Woodwind
-          <ul>
-            <li>Sax
+            <li>Non-Pitched Percussion
               <ul>
-                <li>Soprano</li>
-                <li>Alto</li>
-                <li>Tenor</li>
-                <li>Baritone</li>
+                <li>Hand Percussion</li>
               </ul>
             </li>
+            <li>Horns
+              <ul>
+                <li>Trombone</li>
+                <li>Trumpet</li>
+              </ul>
+            </li>
+            <li>Idiophone</li>
+            <li>String</li>
+            <li>Woodwind
+              <ul>
+                <li>Sax
+                  <ul>
+                    <li>Soprano</li>
+                    <li>Alto</li>
+                    <li>Tenor</li>
+                    <li>Baritone</li>
+                  </ul>
+                </li>
+              </ul>
+            </li>
+            <li>Other</li>
           </ul>
         </li>
+        <li>Lyrical content</li>
+        <li>Vocals
+          <ul>
+            <li>Male</li>
+            <li>Female</li>
+          </ul>
+        </li>
+        <li>Elements</li>
         <li>Other</li>
-      </ul>
-    </li>
-    <li>Lyrical content</li>
-    <li>Vocals
-      <ul>
-        <li>Male</li>
-        <li>Female</li>
-      </ul>
-    </li>
-    <li>Elements</li>
-    <li>Other</li>
-  </ol>
-  <h2>A Tree with Checkbox Semantics</h2>
-  <p>Checkboxes are handled using the <a href="https://github.com/simonwade/jquery-qubit">jQuery Qubit</a> library.</p>
-  <h3>From Checkboxes in Markup</h3>
+      </ol>
+      <h2>A Tree with Checkbox Semantics</h2>
+      <p>Checkboxes are handled using the <a href="https://github.com/aexmachina/jquery-qubit">jQuery Qubit</a> library.</p>
+      <h3>From Checkboxes in Markup</h3>
 <pre>
 $('#checkboxes').bonsai({
   expandAll: true,
   checkboxes: true // depends on jquery.qubit plugin
 });
 </pre>
-  <script>
-  jQuery(function() {
-    $('#checkboxes').bonsai({
-      checkboxes: true // depends on jquery.qubit plugin
-    });
-  });
-  </script>
-  <ol id='checkboxes'>
-    <li class='expanded'><input type='checkbox' /> All
-      <ol>
-        <li><input type='checkbox' /> One</li>
-        <li>
-          <input type='checkbox' /> Two
+      <script>
+      jQuery(function() {
+        $('#checkboxes').bonsai({
+          checkboxes: true // depends on jquery.qubit plugin
+        });
+      });
+      </script>
+      <ol id='checkboxes'>
+        <li class='expanded'><input type='checkbox' /> All
           <ol>
+            <li><input type='checkbox' /> One</li>
             <li>
-              <input type='checkbox' /> Three
+              <input type='checkbox' /> Two
               <ol>
-                <li><input type='checkbox' checked /> Four</li>
+                <li>
+                  <input type='checkbox' /> Three
+                  <ol>
+                    <li><input type='checkbox' checked /> Four</li>
+                  </ol>
+                </li>
+                <li><input type='checkbox' /> Five</li>
               </ol>
             </li>
-            <li><input type='checkbox' /> Five</li>
           </ol>
         </li>
       </ol>
-    </li>
-  </ol>
-  <h3>Auto-Generated Checkboxes</h3>
-  <p>Creates checkboxes for each list item. The name and value for the checkboxes 
-    are taken from <code>data-name</code> and <code>data-value</code>. The name is inherited from the parent 
-    items, if not specified. Checked state can be indicated using <code>data-checked</code>.</p>
+      <h3>Auto-Generated Checkboxes</h3>
+      <p>Creates checkboxes for each list item. The name and value for the checkboxes 
+        are taken from <code>data-name</code> and <code>data-value</code>. The name is inherited from the parent 
+        items, if not specified. Checked state can be indicated using <code>data-checked</code>.</p>
 <pre>
 $('#checkboxes').bonsai({
   expandAll: true,
   checkboxes: true // depends on jquery.qubit plugin
 });
 </pre>
-  <script>
-  jQuery(function() {
-    $('#auto-checkboxes').bonsai({
-      checkboxes: true, // depends on jquery.qubit plugin
-      createCheckboxes: true, // takes values from data-name and data-value, and data-name is inherited
-    });
-  });
-  </script>
-  <pre class="code">
+      <script>
+      jQuery(function() {
+        $('#auto-checkboxes').bonsai({
+          checkboxes: true, // depends on jquery.qubit plugin
+          createCheckboxes: true, // takes values from data-name and data-value, and data-name is inherited
+        });
+      });
+      </script>
+      <pre class="code">
 &lt;ol id='auto-checkboxes' <em>data-name='foo'</em>>
   &lt;li class='expanded' <em>data-value='0'</em>>All
     &lt;ol>
@@ -195,30 +186,30 @@ $('#checkboxes').bonsai({
     &lt;/ol>
   &lt;/li>
 &lt;/ol>
-  </pre>
-  <p>Yields...</p>
-  <ol id='auto-checkboxes' data-name='foo'>
-    <li class='expanded' data-value='0'>All
-      <ol>
-        <li data-value='1'>One</li>
-        <li data-value='2'>
-          Two
+      </pre>
+      <p>Yields...</p>
+      <ol id='auto-checkboxes' data-name='foo'>
+        <li class='expanded' data-value='0'>All
           <ol>
-            <li data-name='baz' data-value='3'>
-              Three
+            <li data-value='1'>One</li>
+            <li data-value='2'>
+              Two
               <ol>
-                <li data-name='baz' data-value='4' data-checked='1'>Four</li>
+                <li data-name='baz' data-value='3'>
+                  Three
+                  <ol>
+                    <li data-name='baz' data-value='4' data-checked='1'>Four</li>
+                  </ol>
+                </li>
+                <li data-value='5'>Five</li>
               </ol>
             </li>
-            <li data-value='5'>Five</li>
           </ol>
         </li>
       </ol>
-    </li>
-  </ol>
-  <h3>Generated Using a JSON Data Source</h3>
-  <p>Requires the <a href="https://github.com/simonwade/jquery-json-list">JSON List plugin</a>.</p>
-  <pre class="code">
+      <h3>Generated Using a JSON Data Source</h3>
+      <p>Requires the <a href="https://github.com/aexmachina/jquery-json-list">JSON List plugin</a>.</p>
+      <pre class="code">
 $('#from-JSON').jsonList({
   url: 'example.json',
   type: 'groupedItems',
@@ -243,41 +234,40 @@ $('#from-JSON').jsonList({
   }
 });
 </pre>
-  <script>
-  $(function() {
-    $('#from-JSON').jsonList({
-      url: 'example.json',
-      type: 'groupedItems',
-      groups: 'locationGroups',
-      items: 'locations',
-      // onListItem: called for each list item created from the JSON
-      onListItem: function(listItem, data, isGroup) {
-        if( !isGroup )
-          // set the id into a data value so that Bonsai createCheckboxes
-          // can set the checkbox value
-          listItem.attr('data-value', data.id);
-      },
-      // success: called after the list is created
-      onSuccess: function(jsonList) {
-        // turn the list into a tree
-        $(this.el).find('> ol').bonsai({
-          checkboxes: true,
-          createCheckboxes: true,
-          handleDuplicateCheckboxes: true,
-          expandAll: true
+      <script>
+      $(function() {
+        $('#from-JSON').jsonList({
+          url: 'example.json',
+          type: 'groupedItems',
+          groups: 'locationGroups',
+          items: 'locations',
+          // onListItem: called for each list item created from the JSON
+          onListItem: function(listItem, data, isGroup) {
+            if( !isGroup )
+              // set the id into a data value so that Bonsai createCheckboxes
+              // can set the checkbox value
+              listItem.attr('data-value', data.id);
+          },
+          // success: called after the list is created
+          onSuccess: function(jsonList) {
+            // turn the list into a tree
+            $(this.el).find('> ol').bonsai({
+              checkboxes: true,
+              createCheckboxes: true,
+              handleDuplicateCheckboxes: true,
+              expandAll: true
+            });
+          }
         });
-      }
-    });
-  });
-  </script>
-  <div id="from-JSON"></div>
-      </section>
-      <footer>
-        <p>Project maintained by <a href="https://github.com/simonwade">simonwade</a></p>
-        <p><small>Hosted on GitHub Pages &mdash; Theme by <a href="http://twitter.com/#!/michigangraham">mattgraham</a></small></p>
-      </footer>
-    </div>
-    <!--[if !IE]><script>fixScale(document);</script><!--<![endif]-->
-    
-  </body>
+      });
+      </script>
+      <div id="from-JSON"></div>
+    </section>
+    <footer>
+      <p>Project maintained by <a href="https://github.com/aexmachina">aexmachina</a></p>
+      <p><small>Hosted on GitHub Pages &mdash; Theme by <a href="http://twitter.com/#!/michigangraham">mattgraham</a></small></p>
+    </footer>
+  </div>
+  <script src="javascripts/scale.fix.js"></script>
+</body>
 </html>
