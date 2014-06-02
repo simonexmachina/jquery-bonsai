@@ -71,7 +71,8 @@ code, pre {
   font-size:12px;
 }
 
-pre {
+pre.code,
+pre.code.prettyprint {
   padding:8px 15px;
   background: #f8f8f8;  
   border-radius:5px;

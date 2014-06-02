@@ -12,6 +12,7 @@
   <script src='https://github.jspm.io/aexmachina/jquery-bonsai@master/jquery.bonsai.js'></script>
   <script src='https://github.jspm.io/aexmachina/jquery-qubit@master/jquery.qubit.js'></script>
   <script src='https://github.jspm.io/aexmachina/jquery-json-list@master/jquery.json-list.js'></script>
+  <script src="https://google-code-prettify.googlecode.com/svn/loader/run_prettify.js"></script>
   <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no">
   <!--[if lt IE 9]>
   <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
@@ -30,13 +31,18 @@
       </ul>
     </header>
     <section>
-      <p>Lightweight jQuery plugin that takes a big nested list and prunes it 
+      <p><code>jquery-bonsai</code> is a lightweight jQuery plugin that takes a big nested list and prunes it
         down to a small expandable tree control.</p>
       <p>Also includes support for checkboxes 
         (including 'indeterminate' state) and for populating the tree using a 
         JSON data source.</p>
-      <h2>Create a Collapsible Tree from a Nested List</h2>
+      <h2>Installation</h2>
 <pre>
+bower install jquery-bonsai --save
+</pre>
+      <h2>Examples</h2>
+      <h3>Create a Collapsible Tree from a Nested List</h3>
+<pre class="code prettyprint javascript">
 $('#music').bonsai();
 </pre>
       <script>
@@ -112,10 +118,10 @@ $('#music').bonsai();
         <li>Elements</li>
         <li>Other</li>
       </ol>
-      <h2>A Tree with Checkbox Semantics</h2>
+      <h3>A Tree with Checkbox Semantics</h3>
       <p>Checkboxes are handled using the <a href="https://github.com/aexmachina/jquery-qubit">jQuery Qubit</a> library.</p>
       <h3>From Checkboxes in Markup</h3>
-<pre>
+<pre class="code prettyprint javascript">
 $('#checkboxes').bonsai({
   expandAll: true,
   checkboxes: true // depends on jquery.qubit plugin
@@ -124,6 +130,7 @@ $('#checkboxes').bonsai({
       <script>
       jQuery(function() {
         $('#checkboxes').bonsai({
+          expandAll: true,
           checkboxes: true // depends on jquery.qubit plugin
         });
       });
@@ -151,21 +158,24 @@ $('#checkboxes').bonsai({
       <p>Creates checkboxes for each list item. The name and value for the checkboxes 
         are taken from <code>data-name</code> and <code>data-value</code>. The name is inherited from the parent 
         items, if not specified. Checked state can be indicated using <code>data-checked</code>.</p>
-<pre>
-$('#checkboxes').bonsai({
+<pre class="code prettyprint javascript">
+$('#auto-checkboxes').bonsai({
   expandAll: true,
-  checkboxes: true // depends on jquery.qubit plugin
+  checkboxes: true, // depends on jquery.qubit plugin
+  createCheckboxes: true // takes values from data-name and data-value, and data-name is inherited
 });
 </pre>
       <script>
       jQuery(function() {
         $('#auto-checkboxes').bonsai({
+          expandAll: true,
           checkboxes: true, // depends on jquery.qubit plugin
-          createCheckboxes: true, // takes values from data-name and data-value, and data-name is inherited
+          createCheckboxes: true // takes values from data-name and data-value, and data-name is inherited
         });
       });
       </script>
-      <pre class="code">
+      <p>The following markup...</p>
+      <pre class="code prettyprint javascript">
 &lt;ol id='auto-checkboxes' <em>data-name='foo'</em>>
   &lt;li class='expanded' <em>data-value='0'</em>>All
     &lt;ol>
@@ -186,7 +196,7 @@ $('#checkboxes').bonsai({
   &lt;/li>
 &lt;/ol>
       </pre>
-      <p>Yields...</p>
+      <p>...yields:</p>
       <ol id='auto-checkboxes' data-name='foo'>
         <li class='expanded' data-value='0'>All
           <ol>
@@ -206,9 +216,9 @@ $('#checkboxes').bonsai({
           </ol>
         </li>
       </ol>
-      <h3>Generated Using a JSON Data Source</h3>
+      <h3>Generate the Tree Using a JSON Data Source</h3>
       <p>Requires the <a href="https://github.com/aexmachina/jquery-json-list">JSON List plugin</a>.</p>
-      <pre class="code">
+<pre class="code prettyprint javascript">
 $('#from-JSON').jsonList({
   url: 'example.json',
   type: 'groupedItems',
@@ -222,9 +232,9 @@ $('#from-JSON').jsonList({
       listItem.attr('data-value', data.id);
   },
   // success: called after the list is created
-  success: function(jsonList) {
+  onSuccess: function(jsonList) {
     // turn the list into a tree
-    $('> ol', this).bonsai({
+    $(this.el).find('> ol').bonsai({
       checkboxes: true,
       createCheckboxes: true,
       handleDuplicateCheckboxes: true,
