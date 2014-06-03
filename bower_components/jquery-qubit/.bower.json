@@ -1,0 +1,36 @@
+{
+  "name": "jquery-qubit",
+  "version": "0.1.1",
+  "homepage": "https://github.com/aexmachina/jquery-qubit",
+  "authors": [
+    "Simon Wade <simon.wade@gmail.com>"
+  ],
+  "description": "Provides the semantics for a nested list of tri-state checkboxes, using the HTML5 \"indeterminate\" property",
+  "main": "jquery.qubit.js",
+  "keywords": [
+    "jquery",
+    "checkbox",
+    "indeterminate"
+  ],
+  "license": "MIT",
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests"
+  ],
+  "dependencies": {
+    "jquery": "*"
+  },
+  "_release": "0.1.1",
+  "_resolution": {
+    "type": "version",
+    "tag": "0.1.1",
+    "commit": "e2507c7f90fa154eeb43c1f2b1f9dd752c145bc7"
+  },
+  "_source": "git://github.com/aexmachina/jquery-qubit.git",
+  "_target": "~0.1.1",
+  "_originalSource": "jquery-qubit",
+  "_direct": true
+}

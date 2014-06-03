@@ -1,0 +1,35 @@
+{
+  "name": "jquery-json-list",
+  "version": "0.1.0",
+  "homepage": "https://github.com/aexmachina/jquery-json-list",
+  "description": "A simple jQuery plugin to create a nested list from a JSON document",
+  "main": "jquery-json-list.js",
+  "keywords": [
+    "jquery",
+    "json"
+  ],
+  "authors": [
+    "Simon Wade @aexmachina"
+  ],
+  "license": "MIT",
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests"
+  ],
+  "dependencies": {
+    "jquery": "*"
+  },
+  "_release": "0.1.0",
+  "_resolution": {
+    "type": "version",
+    "tag": "0.1.0",
+    "commit": "b285982a3cfbb65547d87fb94adc12f6b4871517"
+  },
+  "_source": "git://github.com/aexmachina/jquery-json-list.git",
+  "_target": "~0.1.0",
+  "_originalSource": "jquery-json-list",
+  "_direct": true
+}
