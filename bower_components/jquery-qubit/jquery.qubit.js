@@ -37,7 +37,7 @@
 					checked = siblings.filter(':checked'),
 					oldValue = this.getValue(parent), parentChecked = null;
 				// check parent is within our scope
-				if( !jQuery.contains(this.scope, parent) ) {
+				if( !jQuery.contains(this.scope[0], parent[0]) ) {
 					parent = null;
 				}
 				// if all siblings are checked

@@ -1,6 +1,6 @@
 {
   "name": "jquery-qubit",
-  "version": "0.1.1",
+  "version": "0.1.2",
   "homepage": "https://github.com/aexmachina/jquery-qubit",
   "authors": [
     "Simon Wade <simon.wade@gmail.com>"
@@ -23,14 +23,14 @@
   "dependencies": {
     "jquery": "*"
   },
-  "_release": "0.1.1",
+  "_release": "0.1.2",
   "_resolution": {
     "type": "version",
-    "tag": "0.1.1",
-    "commit": "e2507c7f90fa154eeb43c1f2b1f9dd752c145bc7"
+    "tag": "0.1.2",
+    "commit": "03712818891f55a18c29b4f940ec017776c4a06e"
   },
   "_source": "git://github.com/aexmachina/jquery-qubit.git",
-  "_target": "~0.1.1",
+  "_target": "~0.1.2",
   "_originalSource": "jquery-qubit",
   "_direct": true
 }
