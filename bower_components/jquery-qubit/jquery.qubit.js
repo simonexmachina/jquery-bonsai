@@ -29,40 +29,42 @@
 			this.processParents(checkbox);
 		},
 		processParents: function( checkbox ) {
-			var checkbox = $(checkbox),
-				parentItems = checkbox.parents(this.itemSelector),
-				parent = parentItems.eq(1).children('input[type=checkbox]');
+			checkbox = $(checkbox);
+			var parentItems = checkbox.parents(this.itemSelector),
+					parent = parentItems.eq(1).children('input[type=checkbox]');
+			// check parent is within our scope
+			if( !jQuery.contains(this.scope[0], parent[0]) ) return;
 			if( parent.length > 0 ) {
 				var siblings = this.getSiblings(checkbox, parentItems.eq(1)),
 					checked = siblings.filter(':checked'),
 					oldValue = this.getValue(parent), parentChecked = null;
-				// check parent is within our scope
-				if( !jQuery.contains(this.scope[0], parent[0]) ) {
-					parent = null;
-				}
 				// if all siblings are checked
-				if( siblings.length == checked.length )
+				if( siblings.length == checked.length ) {
 					parentChecked = true;
+				}
 				// else if some are checked
-				else if( checked.length > 0
+				else if( checked.length > 0 ||
 						// or indeterminate
-						|| siblings.filter(this.isIndeterminate).length > 0 )
+						siblings.filter(isIndeterminate).length > 0 ) {
 					this.setIndeterminate(parent, true);
+				}
 				// else none are checked
-				else
+				else {
 					parentChecked = false;
-				// udpate the parent
-				if( parentChecked !== null )
-					this.setChecked(parent, parentChecked);
+				}
+				// update the parent
+				if( parentChecked !== null ) this.setChecked(parent, parentChecked);
 				// and go up the tree if it changed
-				if( oldValue !== this.getValue(parent) )
-					this.processParents(parent);
+				if( oldValue !== this.getValue(parent) ) this.processParents(parent);
+			}
+			function isIndeterminate() {
+				return $(this).prop('indeterminate');
 			}
 		},
 		setChecked: function( checkbox, value, event ) {
 			$(checkbox).prop({
-				'checked': value,
-				'indeterminate': false
+				checked: value,
+				indeterminate: false
 			});
 			if( !event || !event.doneIds || event.doneIds.indexOf(checkbox.id) == -1 ) {
 				event = event || {type: 'change'};
@@ -73,19 +75,16 @@
 		},
 		setIndeterminate: function( checkbox, value ) {
 			$(checkbox).prop({
-				'indeterminate': value,
-				'checked': null
+				indeterminate: value,
+				checked: null
 			});
 		},
 		getSiblings: function( checkbox, listItem ) {
 			listItem = listItem || checkbox.parents(this.itemSelector).get(1);
 			return $('> ol > li > input[type=checkbox], > ul > li > input[type=checkbox]', listItem);
 		},
-		isIndeterminate: function() {
-			return $(this).prop('indeterminate');
-		},
 		getValue: function( checkbox ) {
-			return checkbox.prop('indeterminate') ? null : checkbox.prop('checked');
+			return $(checkbox).prop('indeterminate') ? null : $(checkbox).prop('checked');
 		}
 	};
 }(jQuery));
