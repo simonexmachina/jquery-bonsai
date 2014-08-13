@@ -52,7 +52,6 @@
 				// insert a checkbox after the thumb
 				self.insertCheckbox(item);
 			}
-			item.prepend(thumb);
 			// if there is a child list
 			$(this).children().filter('ol, ul').last().each(function() {
 				// that is not empty
@@ -63,6 +62,18 @@
 				item.addClass('has-children')
 					// attach the sub-list to the item
 					.data('subList', this);
+				var contents = item.contents();
+				// See if there is some text that we should wrap in a span so it can be clickable.
+				if (contents.length > 0 && contents.get(0).nodeType == Node.TEXT_NODE) {
+					var text = contents.filter(function() {
+						return this.nodeType == Node.TEXT_NODE;
+					}).text();
+					item.html('<span class="bonsai_inner">' + text + '</span>').append(contents.slice(1));
+					$('span.bonsai_inner', item).on('click', function() {
+						self.toggle(item);
+					});
+				}
+				item.prepend(thumb);
 				thumb.on('click', function() {
 					self.toggle(item);
 				});
