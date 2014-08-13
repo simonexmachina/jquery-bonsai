@@ -121,12 +121,15 @@
 					return;
 				listItem = $(listItem).addClass('expanded')
 					.removeClass('collapsed');
-				$(listItem.data('subList')).css('height', 'auto');
+				var el = $(listItem.data('subList')),
+					curHeight = el.height(),
+					autoHeight = el.css('height', 'auto').height();
+				el.height(curHeight).animate({height: autoHeight}, 200);
 			}
 			else {
 				listItem = $(listItem).addClass('collapsed')
 					.removeClass('expanded');
-				$(listItem.data('subList')).height(0);
+				$(listItem.data('subList')).animate({height: 0}, 200);
 			}
 		},
 		expandAll: function() {
