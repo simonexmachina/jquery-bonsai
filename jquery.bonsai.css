@@ -9,10 +9,13 @@
     position: relative;
     padding-left: 1.3em; /* padding for the thumb */
 }
+.bonsai_inner {
+	cursor: pointer;
+}
 li .thumb {
     margin: -1px 0 0 -1em;  /* negative margin into the padding of the li */
     position: absolute;
-    cursor: hand;
+    cursor: pointer;
 }
 li.has-children > .thumb:after {
     content: '▸';
