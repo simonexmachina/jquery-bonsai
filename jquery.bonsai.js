@@ -1,8 +1,15 @@
 (function($){
 	$.fn.bonsai = function( options ) {
 		return this.each(function() {
-			var bonsai = new Bonsai(this, options);
-			$(this).data('bonsai', bonsai);
+			var bonsai = $(this).data('bonsai');
+			if (!bonsai) {
+				bonsai = new Bonsai(this, options);
+				$(this).data('bonsai', bonsai);
+			}
+			if (typeof options == 'string') {
+				var method = options;
+				bonsai[method].apply(bonsai, [].slice.call(arguments, 1));
+			}
 		});
 	};
 	$.bonsai = {};
