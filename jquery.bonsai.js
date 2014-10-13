@@ -114,6 +114,10 @@
 						self.toggle(item);
 					});
 				}
+				// if there have no child list
+				if ($(this).children('ul').find('li').length == 0) {
+					item.removeAttr('class');
+				}
 				// if there is a child list
 				$(this).children().filter('ol, ul').each(function() {
 					// that is not empty
