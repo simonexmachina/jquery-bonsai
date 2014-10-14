@@ -33,70 +33,9 @@
 		selectAllExclude: null
 	};
 	var Bonsai = function( el, options ) {
-		var self = this,
-			options = $.extend({}, $.bonsai.defaults, options),
-			checkboxes, isRootNode;
-		this.el = el = $(el);
-		// store the scope in the options for child nodes
-		if( !options.scope ) {
-			options.scope = el;
-			isRootNode = true;
-		}
-		this.options = options;
-		el.addClass('bonsai');
-		
-		if( options.checkboxes ) {
-			checkboxes = true;
-			// handle checkboxes once at the root of the tree, not on each element
-			options.checkboxes = false;
-		}
-		// look for a nested list (if any)
-		el.children().each(function() {
-			var item = $(this),
-				// insert a thumb
-				thumb = $('<div class="thumb" />');
-			if( options.createCheckboxes ) {
-				// insert a checkbox after the thumb
-				self.insertCheckbox(item);
-			}
-			item.prepend(thumb);
-			// if there is a child list
-			$(this).children().filter('ol, ul').last().each(function() {
-				// that is not empty
-				if( $('li', this).length == 0 ) {
-					return;
-				}
-				// then this el has children
-				item.addClass('has-children')
-					// attach the sub-list to the item
-					.data('subList', this);
-				thumb.on('click', function() {
-					self.toggle(item);
-				});
-				// collapse the nested list
-				if( options.expandAll || item.hasClass('expanded') ) {
-					self.expand(item);
-				}
-				else {
-					self.collapse(item);
-				}
-				// handle any deeper nested lists
-				$(this).bonsai(options)
-			});
-		});
-		// if this is root node of the tree
-		if( isRootNode ) {
-			if( checkboxes )
-				el.qubit(options);
-			if( this.options.addExpandAll )
-				this.addExpandAll();
-			if( this.options.addSelectAll )
-				this.addSelectAll();
-		} 
-		this.expand = options.expand || this.expand;
-		this.collapse = options.collapse || this.collapse;
-		this.el.data('bonsai', this);
-		this.initialised = true;
+		var expandAll = options.expandAll;
+		this.update( el, options );
+		if (expandAll) this.expandAll();
 	};
 	Bonsai.prototype = {
 		initialised: false,
@@ -142,6 +81,78 @@
 		collapseAll: function() {
 			this.collapse($('li', this.el));
 		},
+		update: function( el, options ) {
+			var self = this,
+				options = $.extend({}, $.bonsai.defaults, options),
+				checkboxes, isRootNode;
+			this.el = el = $(el);
+			// store the scope in the options for child nodes
+			if( !options.scope ) {
+				options.scope = el;
+				isRootNode = true;
+			}
+			this.options = options;
+			el.addClass('bonsai');
+
+			if( options.checkboxes ) {
+				checkboxes = true;
+				// handle checkboxes once at the root of the tree, not on each element
+				options.checkboxes = false;
+			}
+			// look for a nested list (if any)
+			el.children().each(function() {
+				var item = $(this),
+					thumb = $('<div class="thumb" />');
+				if( options.createCheckboxes ) {
+					// insert a checkbox after the thumb
+					self.insertCheckbox(item);
+				}
+				if(item.find('> .thumb').length == 0) {
+					// insert a thumb
+					item.prepend(thumb);
+					thumb.on('click', function() {
+						self.toggle(item);
+					});
+				}
+				// if there have no child list
+				if ($(this).children('ul').find('li').length == 0) {
+					item.removeAttr('class');
+				}
+				// if there is a child list
+				$(this).children().filter('ol, ul').each(function() {
+					// that is not empty
+					if( $('li', this).length == 0 ) {
+						return;
+					}
+					// then this el has children
+					item.addClass('has-children')
+						// attach the sub-list to the item
+						.data('subList', this);
+					// collapse the nested list
+					if( item.hasClass('expanded') ) {
+						self.expand(item);
+					}
+					else {
+						self.collapse(item);
+					}
+					// handle any deeper nested lists
+					$(this).bonsai('update');
+				});
+			});
+			// if this is root node of the tree
+			if( isRootNode ) {
+				if( checkboxes )
+					el.qubit(options);
+				if( this.options.addExpandAll )
+					this.addExpandAll();
+				if( this.options.addSelectAll )
+					this.addSelectAll();
+			}
+			this.expand = options.expand || this.expand;
+			this.collapse = options.collapse || this.collapse;
+			this.el.data('bonsai', this);
+			this.initialised = true;
+    },
 		insertCheckbox: function( listItem ) {
 			var id = this.generateId(listItem),
 				checkbox = $('<input type="checkbox" name="' 
