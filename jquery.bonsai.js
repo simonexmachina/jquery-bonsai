@@ -1,5 +1,5 @@
 (function($){
-	$.fn.bonsai = function( options ) {
+	$.fn.bonsai = function(options) {
 		return this.each(function() {
 			var bonsai = $(this).data('bonsai');
 			if (!bonsai) {
@@ -32,39 +32,37 @@
 		handleDuplicateCheckboxes: false,
 		selectAllExclude: null
 	};
-	var Bonsai = function( el, options ) {
-		var expandAll = options.expandAll;
-		this.update( el, options );
-		if (expandAll) this.expandAll();
+	var Bonsai = function(el, options) {
+		this.update(el, options);
+		if (options.expandAll) this.expandAll();
 	};
 	Bonsai.prototype = {
 		initialised: false,
-		toggle: function( listItem ) {
-			if( !$(listItem).hasClass('expanded') ) {
+		toggle: function(listItem) {
+			if (!$(listItem).hasClass('expanded')) {
 				this.expand(listItem);
 			}
 			else {
 				this.collapse(listItem);
 			}
 		},
-		expand: function( listItem ) {
+		expand: function(listItem) {
 			this.setExpanded(listItem, true);
 		},
-		collapse: function( listItem ) {
+		collapse: function(listItem) {
 			this.setExpanded(listItem, false);
 		},
-		setExpanded: function( listItem, expanded ) {
+		setExpanded: function(listItem, expanded) {
 			listItem = $(listItem);
-			if( listItem.length > 1 ) {
+			if (listItem.length > 1) {
 				var self = this;
 				listItem.each(function() {
 					self.setExpanded(this, expanded);
 				});
 				return;
 			}
-			if( expanded ) {
-				if( !listItem.data('subList') )
-					return;
+			if (expanded) {
+				if (!listItem.data('subList')) return;
 				listItem = $(listItem).addClass('expanded')
 					.removeClass('collapsed');
 				$(listItem.data('subList')).css('height', 'auto');
@@ -76,52 +74,50 @@
 			}
 		},
 		expandAll: function() {
-			this.expand($('li', this.el));
+			this.expand(this.el.find('li'));
 		},
 		collapseAll: function() {
-			this.collapse($('li', this.el));
+			this.collapse(this.el.find('li'));
 		},
-		update: function( el, options ) {
-			var self = this,
-				options = $.extend({}, $.bonsai.defaults, options),
-				checkboxes, isRootNode;
+		update: function(el, options) {
+			var self = this;
+			var options = $.extend({}, $.bonsai.defaults, options);
+			var checkboxes, isRootNode;
 			this.el = el = $(el);
 			// store the scope in the options for child nodes
-			if( !options.scope ) {
+			if (!options.scope) {
 				options.scope = el;
 				isRootNode = true;
 			}
 			this.options = options;
 			el.addClass('bonsai');
 
-			if( options.checkboxes ) {
+			if (options.checkboxes) {
 				checkboxes = true;
 				// handle checkboxes once at the root of the tree, not on each element
 				options.checkboxes = false;
 			}
 			// look for a nested list (if any)
 			el.children().each(function() {
-				var item = $(this),
-					thumb = $('<div class="thumb" />');
-				if( options.createCheckboxes ) {
-					// insert a checkbox after the thumb
-					self.insertCheckbox(item);
-				}
-				if(item.find('> .thumb').length == 0) {
-					// insert a thumb
+				var item = $(this);
+				if (options.createCheckboxes) self.insertCheckbox(item);
+				// insert a thumb if it doesn't already exist
+				if (item.children().filter('.thumb').length == 0) {
+					var thumb = $('<div class="thumb"></div>');
 					item.prepend(thumb);
 					thumb.on('click', function() {
 						self.toggle(item);
 					});
 				}
-				// if there have no child list
-				if ($(this).children('ul').find('li').length == 0) {
-					item.removeAttr('class');
+				var subLists = item.children().filter('ol, ul');
+				// if there are no child lists
+				if (subLists.length == 0) {
+					item.removeClass('has-children');
 				}
 				// if there is a child list
-				$(this).children().filter('ol, ul').each(function() {
+				subLists.each(function() {
 					// that is not empty
-					if( $('li', this).length == 0 ) {
+					if ($('li', this).length == 0) {
 						return;
 					}
 					// then this el has children
@@ -129,7 +125,7 @@
 						// attach the sub-list to the item
 						.data('subList', this);
 					// collapse the nested list
-					if( item.hasClass('expanded') ) {
+					if (item.hasClass('expanded')) {
 						self.expand(item);
 					}
 					else {
@@ -140,24 +136,20 @@
 				});
 			});
 			// if this is root node of the tree
-			if( isRootNode ) {
-				if( checkboxes )
-					el.qubit(options);
-				if( this.options.addExpandAll )
-					this.addExpandAll();
-				if( this.options.addSelectAll )
-					this.addSelectAll();
+			if (isRootNode) {
+				if (checkboxes) el.qubit(options);
+				if (this.options.addExpandAll) this.addExpandAll();
+				if (this.options.addSelectAll) this.addSelectAll();
 			}
 			this.expand = options.expand || this.expand;
 			this.collapse = options.collapse || this.collapse;
 			this.el.data('bonsai', this);
 			this.initialised = true;
-    },
-		insertCheckbox: function( listItem ) {
+		},
+		insertCheckbox: function(listItem) {
 			var id = this.generateId(listItem),
-				checkbox = $('<input type="checkbox" name="' 
-					+ this.getCheckboxName(listItem)
-					+ '" id="' + id  + '" /> '
+				checkbox = $('<input type="checkbox" name="'
+					+ this.getCheckboxName(listItem) + '" id="' + id + '" /> '
 				),
 				children = listItem.children(),
 				// get the first text node for the label
@@ -173,16 +165,16 @@
 					.append(text ? text : children.first())
 				)
 				.append(text ? children : children.slice(1));
-			if( this.options.handleDuplicateCheckboxes ) {
+			if (this.options.handleDuplicateCheckboxes) {
 				this.handleDuplicates(checkbox);
 			}
 		},
-		handleDuplicates: function( checkbox ) {
+		handleDuplicates: function(checkbox) {
 			var self = this,
 				checkbox = $(checkbox);
 			checkbox.bind('change', function(e) {
 				var isChecked = checkbox.prop('checked');
-				if( this.value ) {
+				if (this.value) {
 					var id = this.id;
 					e.duplicateIds = e.duplicateIds || [];
 					e.duplicateIds.push(id);
@@ -211,14 +203,14 @@
 			});
 		},
 		idPrefix: 'checkbox-',
-		generateId: function( listItem ) {
+		generateId: function(listItem) {
 			do {
 				var id = this.idPrefix + Bonsai.uniqueId++;
 			}
-			while( $('#' + id).length > 0 );
+			while($('#' + id).length > 0);
 			return id;
 		},
-		getCheckboxName: function( listItem ) {
+		getCheckboxName: function(listItem) {
 			return listItem.data('name')
 				|| listItem.parents().filter('[data-name]').data('name');
 		},
@@ -274,7 +266,7 @@
 				)
 				.insertAfter(this.el);
 		},
-		setCheckedValues: function( values ) {
+		setCheckedValues: function(values) {
 			var all = this.options.scope.find('input[type=checkbox]');
 			$.each(values, function(key, value) {
 				all.filter('[value="' + value + '"]')
