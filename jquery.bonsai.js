@@ -33,6 +33,7 @@
     selectAllExclude: null
   };
   var Bonsai = function(el, options) {
+    options = options || {};
     this.update(el, options);
     if (options.expandAll) this.expandAll();
   };
