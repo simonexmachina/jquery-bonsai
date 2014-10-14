@@ -271,6 +271,10 @@ $('#from-JSON').jsonList({
       });
       </script>
       <div id="from-JSON"></div>
+      <p>If the DOM changes then you'll need to call <code>update</code>:</p>
+      <pre class="code prettyprint javascript">
+$('#from-JSON > ol').bonsai('update');
+</pre>
     </section>
     <footer>
       <p>Project maintained by <a href="https://github.com/aexmachina">aexmachina</a></p>
