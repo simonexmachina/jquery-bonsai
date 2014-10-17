@@ -1,5 +1,6 @@
 (function($){
   $.fn.bonsai = function(options) {
+    var args = arguments;
     return this.each(function() {
       var bonsai = $(this).data('bonsai');
       if (!bonsai) {
@@ -8,7 +9,7 @@
       }
       if (typeof options == 'string') {
         var method = options;
-        bonsai[method].apply(bonsai, [].slice.call(arguments, 1));
+        bonsai[method].apply(bonsai, [].slice.call(args, 1));
       }
     });
   };
