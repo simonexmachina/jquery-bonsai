@@ -1,6 +1,6 @@
 {
   "name": "jquery-bonsai",
-  "version": "1.0.1",
+  "version": "1.0.2",
   "main": "jquery.bonsai.js",
   "ignore": [
     "**/.*",
