@@ -10,7 +10,7 @@
 		$('input[type=checkbox]', el).on('change', function(e) {
 			self.process(e.target, e);
 		});
-		$('input[type=checkbox]:checked').each(function() {
+		$('input[type=checkbox]:checked', el).each(function() {
 			self.process(this)
 		});
 	};
@@ -18,7 +18,7 @@
 		itemSelector: 'li',
 		process: function( checkbox, event ) {
 			var checkbox = $(checkbox),
-				parentItems = checkbox.parents(this.itemSelector),
+				parentItems = checkbox.parentsUntil(this.scope, this.itemSelector),
 				self = this;
 			// all children inherit my state
 			parentItems.eq(0).find('input[type=checkbox]').each(function() {
@@ -30,10 +30,10 @@
 		},
 		processParents: function( checkbox ) {
 			checkbox = $(checkbox);
-			var parentItems = checkbox.parents(this.itemSelector),
+			var parentItems = checkbox.parentsUntil(this.scope, this.itemSelector),
 					parent = parentItems.eq(1).children('input[type=checkbox]');
 			// check parent is within our scope
-			if( !jQuery.contains(this.scope[0], parent[0]) ) return;
+			if( !$.contains(this.scope[0], parent[0]) ) return;
 			if( parent.length > 0 ) {
 				var siblings = this.getSiblings(checkbox, parentItems.eq(1)),
 					checked = siblings.filter(':checked'),
@@ -66,12 +66,6 @@
 				checked: value,
 				indeterminate: false
 			});
-			if( !event || !event.doneIds || event.doneIds.indexOf(checkbox.id) == -1 ) {
-				event = event || {type: 'change'};
-				event.doneIds = event.doneIds || [];
-				event.doneIds.push(checkbox.id);
-				$(checkbox).trigger(event);
-			}
 		},
 		setIndeterminate: function( checkbox, value ) {
 			$(checkbox).prop({
@@ -80,7 +74,7 @@
 			});
 		},
 		getSiblings: function( checkbox, listItem ) {
-			listItem = listItem || checkbox.parents(this.itemSelector).get(1);
+			listItem = listItem || checkbox.parentsUntil(this.itemSelector).get(1);
 			return $('> ol > li > input[type=checkbox], > ul > li > input[type=checkbox]', listItem);
 		},
 		getValue: function( checkbox ) {

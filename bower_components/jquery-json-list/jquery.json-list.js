@@ -16,7 +16,7 @@
 				groupLabel: 'name',
 				itemLabel: 'name',
 				onSuccess: function( jsonList ) {},
-				onListItem: function( listItem, data, isGroup ) {},
+				onListItem: function( event, listItem, data, isGroup ) {},
 				onResponse: function( data, textStatus ) {}
 			}, options);
 			var self = this;

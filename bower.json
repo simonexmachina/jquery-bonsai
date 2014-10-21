@@ -8,8 +8,8 @@
   "license": "MIT",
   "private": true,
   "dependencies": {
-    "jquery-bonsai": "~1.0.0",
-    "jquery-json-list": "~0.1.0",
-    "jquery-qubit": "~0.1.4"
+    "jquery-bonsai": "~1.0.3",
+    "jquery-json-list": "~0.1.2",
+    "jquery-qubit": "~1.0.1"
   }
 }

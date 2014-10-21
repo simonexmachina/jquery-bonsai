@@ -1,6 +1,6 @@
 {
   "name": "jquery-bonsai",
-  "version": "0.1.1",
+  "version": "1.0.3",
   "main": "jquery.bonsai.js",
   "ignore": [
     "**/.*",
@@ -13,14 +13,13 @@
     "jquery": "*"
   },
   "homepage": "https://github.com/aexmachina/jquery-bonsai",
-  "_release": "0.1.1",
+  "_release": "1.0.3",
   "_resolution": {
     "type": "version",
-    "tag": "0.1.1",
-    "commit": "61da0cc7e175663cc4b44e0391095c024e6522e2"
+    "tag": "v1.0.3",
+    "commit": "8909d12ba6aaa22ca7f41650e74bc121632d38f7"
   },
   "_source": "git://github.com/aexmachina/jquery-bonsai.git",
-  "_target": "~0.1.1",
-  "_originalSource": "jquery-bonsai",
-  "_direct": true
+  "_target": "~1.0.3",
+  "_originalSource": "jquery-bonsai"
 }
