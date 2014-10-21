@@ -104,20 +104,15 @@
           });
         }
         var subLists = item.children().filter('ol, ul');
-        // if there are no child lists
-        if (subLists.length == 0) {
-          item.removeClass('has-children');
-        }
+				item.toggleClass('has-children', subLists.length > 0);
         // if there is a child list
         subLists.each(function() {
-          // that is not empty
+          // that's not empty
           if ($('li', this).length == 0) {
             return;
           }
           // then this el has children
-          item.addClass('has-children')
-            // attach the sub-list to the item
-            .data('subList', this);
+          item.data('subList', this);
           // collapse the nested list
           if (item.hasClass('expanded')) {
             self.expand(item);
@@ -126,7 +121,8 @@
             self.collapse(item);
           }
           // handle any deeper nested lists
-          $(this).bonsai(self.options);
+          var exists = !!$(this).data('bonsai');
+          $(this).bonsai(exists ? 'update' : self.options);
         });
       });
       // if this is root node of the tree
