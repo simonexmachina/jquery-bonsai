@@ -8,11 +8,11 @@
   <link rel="stylesheet" href="stylesheets/custom.css">
   <link rel="stylesheet" href="stylesheets/pygment_trac.css">
   <link rel='stylesheet' type='text/css' href='bower_components/jquery-bonsai/jquery.bonsai.css' />
-  <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js"></script>
+  <script src="bower_components/jquery/dist/jquery.min.js"></script>
   <script src='bower_components/jquery-bonsai/jquery.bonsai.js'></script>
   <script src='bower_components/jquery-qubit/jquery.qubit.js'></script>
   <script src='bower_components/jquery-json-list/jquery.json-list.js'></script>
-  <script src="https://google-code-prettify.googlecode.com/svn/loader/run_prettify.js"></script>
+  <script src="bower_components/google-code-prettify/bin/run_prettify.min.js"></script>
   <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no">
   <!--[if lt IE 9]>
   <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
@@ -138,16 +138,16 @@ $('#checkboxes').bonsai({
       });
       </script>
       <ol id='checkboxes'>
-        <li class='expanded'><input type='checkbox' /> All
+        <li class='expanded'><input type='checkbox' value='root' /> All
           <ol>
-            <li><input type='checkbox' /> One</li>
+            <li><input type='checkbox' value='1' /> One</li>
             <li>
-              <input type='checkbox' /> Two
+              <input type='checkbox' value='2' /> Two
               <ol>
                 <li>
-                  <input type='checkbox' /> Three
+                  <input type='checkbox' value='3' /> Three
                   <ol>
-                    <li><input type='checkbox' checked /> Four</li>
+                    <li><input type='checkbox' value='4' checked /> Four</li>
                     <li><input type='checkbox' name='checkboxes' value='5' /> Five</li>
                   </ol>
                 </li>
@@ -228,7 +228,7 @@ $('#from-JSON').jsonList({
   groups: 'locationGroups',
   items: 'locations',
   // onListItem: called for each list item created from the JSON
-  onListItem: function(listItem, data, isGroup) {
+  onListItem: function(event, listItem, data, isGroup) {
     if (!isGroup) {
       // set the id into a data value so that Bonsai createCheckboxes
       // can set the checkbox value
@@ -236,7 +236,7 @@ $('#from-JSON').jsonList({
     }
   },
   // success: called after the list is created
-  onSuccess: function(jsonList) {
+  onSuccess: function(event, jsonList) {
     // turn the list into a tree
     $(this.el).find('> ol').bonsai({
       checkboxes: true,
@@ -255,7 +255,7 @@ $('#from-JSON').jsonList({
           groups: 'locationGroups',
           items: 'locations',
           // onListItem: called for each list item created from the JSON
-          onListItem: function(listItem, data, isGroup) {
+          onListItem: function(event, listItem, data, isGroup) {
             if (!isGroup) {
               // set the id into a data value so that Bonsai createCheckboxes
               // can set the checkbox value
@@ -263,7 +263,7 @@ $('#from-JSON').jsonList({
             }
           },
           // success: called after the list is created
-          onSuccess: function(jsonList) {
+          onSuccess: function(event, jsonList) {
             // turn the list into a tree
             $(this.el).find('> ol').bonsai({
               checkboxes: true,
