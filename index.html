@@ -124,14 +124,16 @@ $('#music').bonsai();
 <pre class="code prettyprint javascript">
 $('#checkboxes').bonsai({
   expandAll: true,
-  checkboxes: true // depends on jquery.qubit plugin
+  checkboxes: true, // depends on jquery.qubit plugin
+  handleDuplicateCheckboxes: true // optional
 });
 </pre>
       <script>
       jQuery(function() {
         $('#checkboxes').bonsai({
           expandAll: true,
-          checkboxes: true // depends on jquery.qubit plugin
+          checkboxes: true, // depends on jquery.qubit plugin
+          handleDuplicateCheckboxes: true // optional
         });
       });
       </script>
@@ -146,11 +148,12 @@ $('#checkboxes').bonsai({
                   <input type='checkbox' /> Three
                   <ol>
                     <li><input type='checkbox' checked /> Four</li>
+                    <li><input type='checkbox' name='checkboxes' value='5' /> Five</li>
                   </ol>
                 </li>
-                <li><input type='checkbox' /> Five</li>
               </ol>
             </li>
+            <li><input type='checkbox' name='checkboxes' value='5' /> Duplicate of five</li>
           </ol>
         </li>
       </ol>
@@ -226,10 +229,11 @@ $('#from-JSON').jsonList({
   items: 'locations',
   // onListItem: called for each list item created from the JSON
   onListItem: function(listItem, data, isGroup) {
-    if( !isGroup )
+    if (!isGroup) {
       // set the id into a data value so that Bonsai createCheckboxes
       // can set the checkbox value
       listItem.attr('data-value', data.id);
+    }
   },
   // success: called after the list is created
   onSuccess: function(jsonList) {
@@ -252,10 +256,11 @@ $('#from-JSON').jsonList({
           items: 'locations',
           // onListItem: called for each list item created from the JSON
           onListItem: function(listItem, data, isGroup) {
-            if( !isGroup )
+            if (!isGroup) {
               // set the id into a data value so that Bonsai createCheckboxes
               // can set the checkbox value
               listItem.attr('data-value', data.id);
+            }
           },
           // success: called after the list is created
           onSuccess: function(jsonList) {
