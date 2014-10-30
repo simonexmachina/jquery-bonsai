@@ -10,7 +10,7 @@
   "dependencies": {
     "jquery-bonsai": "~1.0.4",
     "jquery-json-list": "~0.1.2",
-    "jquery-qubit": "~2.0.0",
+    "jquery-qubit": "~2.0.1",
     "google-code-prettify": "~1.0.3"
   }
 }

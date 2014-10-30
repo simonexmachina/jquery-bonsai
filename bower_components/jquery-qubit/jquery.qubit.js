@@ -43,7 +43,9 @@
         var $this = $(this),
             parent = $this.closest(self.itemSelector),
             children = parent.find('input[type=checkbox]').not($this),
-            numChecked = children.filter(':checked').length;
+            numChecked = children.filter(function() {
+              return $(this).prop('checked') || $(this).prop('indeterminate');
+            }).length;
 
         if (children.length) {
           if (numChecked == 0) {
@@ -68,7 +70,7 @@
     setIndeterminate: function(checkbox, value) {
       checkbox.prop('indeterminate', value);
       if (value) {
-        checkbox.prop('checked', true);
+        checkbox.prop('checked', false);
       }
     }
   };
