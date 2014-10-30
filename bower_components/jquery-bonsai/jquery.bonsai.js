@@ -156,8 +156,9 @@
     },
     handleDuplicates: function() {
       var self = this;
-      self.el.on('change', function(ev) {
+      self.el.on('change', 'input[type=checkbox]', function(ev) {
         var checkbox = $(ev.target);
+        if (!checkbox.val()) return;
         // select all duplicate checkboxes that need to be updated
         var selector = 'input[type=checkbox]'
             + '[value="' + checkbox.val() + '"]'
@@ -166,7 +167,7 @@
         self.el.find(selector).prop({
           checked: checkbox.prop('checked'),
           indeterminate: checkbox.prop('indeterminate')
-        }).change();
+        }).trigger('change');
       });
     },
     idPrefix: 'checkbox-',

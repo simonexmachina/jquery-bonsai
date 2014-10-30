@@ -20,6 +20,6 @@
     "commit": "3cc9a3868619bb015d6a4ac02b58dbe145e1e32d"
   },
   "_source": "git://github.com/aexmachina/jquery-bonsai.git",
-  "_target": "~1.0.3",
+  "_target": "~1.0.4",
   "_originalSource": "jquery-bonsai"
 }
