@@ -38,7 +38,7 @@
       }
     },
     processParents: function() {
-      var self = this;
+      var self = this, changed = false;
       this.scope.find('input[type=checkbox]').each(function() {
         var $this = $(this),
             parent = $this.closest(self.itemSelector),
@@ -49,28 +49,33 @@
 
         if (children.length) {
           if (numChecked == 0) {
-            self.setChecked($this, false);
+            if (self.setChecked($this, false)) changed = true;
           } else if (numChecked == children.length) {
-            self.setChecked($this, true);
+            if (self.setChecked($this, true)) changed = true;
           } else {
-            self.setIndeterminate($this, true);
+            if (self.setIndeterminate($this, true)) changed = true;
           }
         }
         else {
-          self.setIndeterminate($this, false);
+          if (self.setIndeterminate($this, false)) changed = true;
         }
       });
+      if (changed) this.processParents();
     },
     setChecked: function(checkbox, value, event) {
       checkbox.prop('indeterminate', false);
       if (checkbox.prop('checked') != value) {
         checkbox.prop('checked', value).trigger('change');
+        return true;
       }
     },
     setIndeterminate: function(checkbox, value) {
-      checkbox.prop('indeterminate', value);
       if (value) {
         checkbox.prop('checked', false);
+      }
+      if (checkbox.prop('indeterminate') != value) {
+        checkbox.prop('indeterminate', value);
+        return true;
       }
     }
   };

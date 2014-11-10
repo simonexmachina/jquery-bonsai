@@ -1,6 +1,6 @@
 {
   "name": "jquery-qubit",
-  "version": "2.0.1",
+  "version": "2.0.2",
   "homepage": "https://github.com/aexmachina/jquery-qubit",
   "authors": [
     "aexmachina"
@@ -23,14 +23,13 @@
   "dependencies": {
     "jquery": "*"
   },
-  "_release": "2.0.1",
+  "_release": "2.0.2",
   "_resolution": {
     "type": "version",
-    "tag": "v2.0.1",
-    "commit": "597d4489efc14389efe64a730eefcb3adebae11b"
+    "tag": "v2.0.2",
+    "commit": "cac6ff0686af45dfd859a4be9f97f1e13ef37f89"
   },
   "_source": "git://github.com/aexmachina/jquery-qubit.git",
-  "_target": "~2.0.1",
-  "_originalSource": "jquery-qubit",
-  "_direct": true
+  "_target": "~2.0.2",
+  "_originalSource": "jquery-qubit"
 }
