@@ -34,6 +34,7 @@
     selectAllExclude: null
   };
   var Bonsai = function(el, options) {
+    var self = this;
     options = options || {};
     this.options = $.extend({}, $.bonsai.defaults, options);
     this.el = $(el).addClass('bonsai').data('bonsai', this);
@@ -43,6 +44,9 @@
       if (this.options.checkboxes) this.el.qubit(this.options);
       if (this.options.addExpandAll) this.addExpandAllLink();
       if (this.options.addSelectAll) this.addSelectAllLink();
+      this.el.on('click', '.thumb', function(ev) {
+        self.toggle($(ev.currentTarget).closest('li'));
+      });
     }
     if (this.options.expandAll) this.expandAll();
   };
@@ -105,9 +109,6 @@
         if (item.children().filter('.thumb').length == 0) {
           var thumb = $('<div class="thumb"></div>');
           item.prepend(thumb);
-          thumb.on('click', function() {
-            self.toggle(item);
-          });
         }
         var subLists = item.children().filter('ol, ul');
 				item.toggleClass('has-children', subLists.find('li').length > 0);
