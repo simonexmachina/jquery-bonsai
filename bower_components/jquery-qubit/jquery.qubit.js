@@ -63,11 +63,16 @@
       if (changed) this.processParents();
     },
     setChecked: function(checkbox, value, event) {
-      checkbox.prop('indeterminate', false);
+      var changed = false;
+      if (checkbox.prop('indeterminate')) {
+        checkbox.prop('indeterminate', false);
+        changed = true;
+      }
       if (checkbox.prop('checked') != value) {
         checkbox.prop('checked', value).trigger('change');
-        return true;
+        changed = true;
       }
+      return changed;
     },
     setIndeterminate: function(checkbox, value) {
       if (value) {
