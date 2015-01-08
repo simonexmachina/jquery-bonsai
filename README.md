@@ -71,6 +71,7 @@ $('#list').bonsai('expand', listItem);
 ### `Bonsai#serialize()`
 
 Returns an object representing the expanded/collapsed state of the list.
+The identify of the list items for serialize and restore is based on the `id` or `data-bonsai-id` attributes.
 
 ```js
 var state = $('#list').bonsai('serialize');
