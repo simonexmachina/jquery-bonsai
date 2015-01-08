@@ -154,7 +154,7 @@
         var state =
               $li.hasClass('expanded') ? 'expanded' :
               $li.hasClass('collapsed') ? 'collapsed' :
-              'indeterminate';
+              null;
 
         acc[self.liId($li)] = state;
         return acc;
