@@ -38,6 +38,11 @@
     options = options || {};
     this.options = $.extend({}, $.bonsai.defaults, options);
     this.el = $(el).addClass('bonsai').data('bonsai', this);
+
+    this.guid = Math.round(Math.random()*1e8);
+    this.generatedIdPrefix = 'bonsai-generated-' + this.guid + '-';
+    this.specifiedIdPrefix = 'bonsai-specified-' + this.guid + '-';
+
     this.update();
     if (this.isRootNode()) {
       if (this.options.handleDuplicateCheckboxes) this.handleDuplicates();
@@ -132,12 +137,18 @@
           $(this).bonsai(exists ? 'update' : self.options);
         });
       });
+
       this.expand = this.options.expand || this.expand;
       this.collapse = this.options.collapse || this.collapse;
+
+      this.el.find('li').toArray().forEach(function(li) {
+        // liId writes the id to the actual id attribute
+        self.liId($(li));
+      });
     },
     insertCheckbox: function(listItem) {
       if (listItem.find('> input[type=checkbox]').length) return;
-      var id = this.generateId(listItem),
+      var id = this.checkboxId(listItem),
           checkbox = $('<input type="checkbox" name="'
             + this.getCheckboxName(listItem) + '" id="' + id + '" /> '
           ),
@@ -171,13 +182,27 @@
         }).trigger('change');
       });
     },
-    idPrefix: 'checkbox-',
-    generateId: function(listItem) {
-      do {
-        var id = this.idPrefix + Bonsai.uniqueId++;
+    checkboxPrefix: 'checkbox-',
+    liId: function(listItem) {
+      var id = listItem.attr('id');
+      var dataId = listItem.attr('data-bonsai-id');
+
+      if (id) {
+        // noop
+      } else if (dataId) {
+        id = this.specifiedIdPrefix + dataId;
+      } else {
+        do {
+          id = this.generatedIdPrefix + Bonsai.uniqueId++;
+        }
+        while($('#' + id).length > 0);
       }
-      while($('#' + id).length > 0);
+
+      listItem.attr('id', id);
       return id;
+    },
+    checkboxId: function(listItem) {
+      return this.checkboxPrefix + this.liId(listItem);
     },
     getCheckboxName: function(listItem) {
       return listItem.data('name')
