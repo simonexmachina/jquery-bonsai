@@ -9,15 +9,19 @@
       }
       if (typeof options == 'string') {
         var method = options;
-        bonsai[method].apply(bonsai, [].slice.call(args, 1));
+        return bonsai[method].apply(bonsai, [].slice.call(args, 1));
       }
     });
   };
   $.bonsai = {};
   $.bonsai.defaults = {
-    expandAll: false, // boolean expands all items
-    expand: null, // function to expand an item
-    collapse: null, // function to collapse an item
+    expandAll: false, // expand all items
+    expand: null, // optional function to expand an item
+    collapse: null, // optional function to collapse an item
+    addExpandAll: false, // add a link to expand all items
+    addSelectAll: false, // add a link to select all checkboxes
+    selectAllExclude: null, // a filter selector or function for selectAll
+
     checkboxes: false, // requires jquery.qubit
     // createCheckboxes: creates checkboxes for each list item.
     //
@@ -28,16 +32,20 @@
     //
     // Checked state can be indicated using `data-checked`.
     createCheckboxes: false,
-    // handleDuplicateCheckboxes: adds onChange bindings to update
-    // any other checkboxes that have the same value.
-    handleDuplicateCheckboxes: false,
-    selectAllExclude: null
+    // handleDuplicateCheckboxes: update any other checkboxes that
+    // have the same value
+    handleDuplicateCheckboxes: false
   };
   var Bonsai = function(el, options) {
     var self = this;
     options = options || {};
     this.options = $.extend({}, $.bonsai.defaults, options);
     this.el = $(el).addClass('bonsai').data('bonsai', this);
+
+    this.guid = Math.round(Math.random()*1e8);
+    this.generatedIdPrefix = 'bonsai-generated-' + this.guid + '-';
+    this.specifiedIdPrefix = 'bonsai-specified-' + this.guid + '-';
+
     this.update();
     if (this.isRootNode()) {
       if (this.options.handleDuplicateCheckboxes) this.handleDuplicates();
@@ -111,7 +119,7 @@
           item.prepend(thumb);
         }
         var subLists = item.children().filter('ol, ul');
-				item.toggleClass('has-children', subLists.find('li').length > 0);
+        item.toggleClass('has-children', subLists.find('li').length > 0);
         // if there is a child list
         subLists.each(function() {
           // that's not empty
@@ -132,12 +140,44 @@
           $(this).bonsai(exists ? 'update' : self.options);
         });
       });
+
       this.expand = this.options.expand || this.expand;
       this.collapse = this.options.collapse || this.collapse;
+
+      this.el.find('li').toArray().forEach(function(li) {
+        // liId writes the id to the actual id attribute
+        self.liId($(li));
+      });
+    },
+    serialize: function() {
+      var self = this;
+
+      return this.el.find('li').toArray().reduce(function(acc, li) {
+        var $li = $(li);
+        var state =
+              $li.hasClass('expanded') ? 'expanded' :
+              $li.hasClass('collapsed') ? 'collapsed' :
+              null;
+
+        acc[self.liId($li)] = state;
+        return acc;
+      }, {});
+    },
+    restore: function(state) {
+      var self = this;
+
+      Object.keys(state).forEach(function(key) {
+        var $li = self.el.find('#' + key);
+        if (state[key] === 'expanded') {
+          self.expand($li);
+        } else if (state[key] === 'collapsed') {
+          self.collapse($li);
+        }
+      });
     },
     insertCheckbox: function(listItem) {
       if (listItem.find('> input[type=checkbox]').length) return;
-      var id = this.generateId(listItem),
+      var id = this.checkboxId(listItem),
           checkbox = $('<input type="checkbox" name="'
             + this.getCheckboxName(listItem) + '" id="' + id + '" /> '
           ),
@@ -171,13 +211,27 @@
         }).trigger('change');
       });
     },
-    idPrefix: 'checkbox-',
-    generateId: function(listItem) {
-      do {
-        var id = this.idPrefix + Bonsai.uniqueId++;
+    checkboxPrefix: 'checkbox-',
+    liId: function(listItem) {
+      var id = listItem.attr('id');
+      var dataId = listItem.attr('data-bonsai-id');
+
+      if (id) {
+        // noop
+      } else if (dataId) {
+        id = this.specifiedIdPrefix + dataId;
+      } else {
+        do {
+          id = this.generatedIdPrefix + Bonsai.uniqueId++;
+        }
+        while($('#' + id).length > 0);
       }
-      while($('#' + id).length > 0);
+
+      listItem.attr('id', id);
       return id;
+    },
+    checkboxId: function(listItem) {
+      return this.checkboxPrefix + this.liId(listItem);
     },
     getCheckboxName: function(listItem) {
       return listItem.data('name')

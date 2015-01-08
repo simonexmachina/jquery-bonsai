@@ -18,3 +18,68 @@ bower install jquery-bonsai --save
 ```
 $('ul#my-nested-list').bonsai();
 ```
+
+## API
+
+### `$.fn.bonsai(options)`
+
+```js
+$('#list').bonsai({
+  expandAll: false, // expand all items
+  expand: null, // optional function to expand an item
+  collapse: null, // optional function to collapse an item
+  addExpandAll: false, // add a link to expand all items
+  addSelectAll: false, // add a link to select all checkboxes
+  selectAllExclude: null, // a filter selector or function for selectAll
+
+  checkboxes: false, // requires jquery.qubit
+  // createCheckboxes: creates checkboxes for each list item.
+  //
+  // The name and value for the checkboxes can be declared in the
+  // markup using `data-name` and `data-value`.
+  //
+  // The name is inherited from parent items if not specified.
+  //
+  // Checked state can be indicated using `data-checked`.
+  createCheckboxes: false,
+  // handleDuplicateCheckboxes: update any other checkboxes that
+  // have the same value
+  handleDuplicateCheckboxes: false
+});
+```
+
+### `Bonsai#update()`
+
+If the DOM changes then you'll need to call `#update`:
+
+```js
+$('#list').bonsai('update');
+```
+
+### Expanding/collapsing items
+
+- `Bonsai#expand(listItem)`, `Bonsai#collapse(listItem)` and `Bonsai#toggle(listItem)`
+- `Bonsai#expandAll(listItem)` and `Bonsai#collapseAll(listItem)`
+
+```js
+$('#list').bonsai('expand', listItem);
+```
+
+### `Bonsai#serialize()`
+
+Returns an object representing the expanded/collapsed state of the list.
+
+```js
+var state = $('#list').bonsai('serialize');
+```
+
+### `Bonsai#restore()`
+
+Restores the expanded/collapsed state of the list using the return value of `#serialize()`.
+
+```js
+var state = $('#list').bonsai('serialize');
+// do stuff that changes the DOM, and may not retain collapsed state
+$('#list').bonsai('update'); // update to handle any new DOM elements
+$('#list').bonsai('restore', state); // restores the collapsed state
+```
