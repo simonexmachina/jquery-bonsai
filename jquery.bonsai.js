@@ -111,7 +111,7 @@
           item.prepend(thumb);
         }
         var subLists = item.children().filter('ol, ul');
-				item.toggleClass('has-children', subLists.find('li').length > 0);
+        item.toggleClass('has-children', subLists.find('li').length > 0);
         // if there is a child list
         subLists.each(function() {
           // that's not empty
