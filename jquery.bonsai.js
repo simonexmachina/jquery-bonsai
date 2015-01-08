@@ -9,15 +9,19 @@
       }
       if (typeof options == 'string') {
         var method = options;
-        bonsai[method].apply(bonsai, [].slice.call(args, 1));
+        return bonsai[method].apply(bonsai, [].slice.call(args, 1));
       }
     });
   };
   $.bonsai = {};
   $.bonsai.defaults = {
-    expandAll: false, // boolean expands all items
-    expand: null, // function to expand an item
-    collapse: null, // function to collapse an item
+    expandAll: false, // expand all items
+    expand: null, // optional function to expand an item
+    collapse: null, // optional function to collapse an item
+    addExpandAll: false, // add a link to expand all items
+    addSelectAll: false, // add a link to select all checkboxes
+    selectAllExclude: null, // a filter selector or function for selectAll
+
     checkboxes: false, // requires jquery.qubit
     // createCheckboxes: creates checkboxes for each list item.
     //
@@ -28,10 +32,9 @@
     //
     // Checked state can be indicated using `data-checked`.
     createCheckboxes: false,
-    // handleDuplicateCheckboxes: adds onChange bindings to update
-    // any other checkboxes that have the same value.
-    handleDuplicateCheckboxes: false,
-    selectAllExclude: null
+    // handleDuplicateCheckboxes: update any other checkboxes that
+    // have the same value
+    handleDuplicateCheckboxes: false
   };
   var Bonsai = function(el, options) {
     var self = this;
