@@ -146,6 +146,32 @@
         self.liId($(li));
       });
     },
+    serialize: function() {
+      var self = this;
+
+      return this.el.find('li').toArray().reduce(function(acc, li) {
+        var $li = $(li);
+        var state =
+              $li.hasClass('expanded') ? 'expanded' :
+              $li.hasClass('collapsed') ? 'collapsed' :
+              'indeterminate';
+
+        acc[self.liId($li)] = state;
+        return acc;
+      }, {});
+    },
+    restore: function(state) {
+      var self = this;
+
+      Object.keys(state).forEach(function(key) {
+        var $li = self.el.find('#' + key);
+        if (state[key] === 'expanded') {
+          self.expand($li);
+        } else if (state[key] === 'collapsed') {
+          self.collapse($li);
+        }
+      });
+    },
     insertCheckbox: function(listItem) {
       if (listItem.find('> input[type=checkbox]').length) return;
       var id = this.checkboxId(listItem),
