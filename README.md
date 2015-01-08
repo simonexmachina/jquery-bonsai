@@ -58,8 +58,11 @@ $('#list').bonsai('update');
 
 ### Expanding/collapsing items
 
-- `Bonsai#expand(listItem)`, `Bonsai#collapse(listItem)` and `Bonsai#toggle(listItem)`
-- `Bonsai#expandAll(listItem)` and `Bonsai#collapseAll(listItem)`
+- `Bonsai#expand(listItem)`
+- `Bonsai#collapse(listItem)`
+- `Bonsai#toggle(listItem)`
+- `Bonsai#expandAll(listItem)`
+- `Bonsai#collapseAll(listItem)`
 
 ```js
 $('#list').bonsai('expand', listItem);
