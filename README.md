@@ -74,7 +74,8 @@ Returns an object representing the expanded/collapsed state of the list.
 The identify of the list items for serialize and restore is based on the `id` or `data-bonsai-id` attributes.
 
 ```js
-var state = $('#list').bonsai('serialize');
+var bonsai = $('#list').data('bonsai');
+var state = bonsai.serialize();
 ```
 
 ### `Bonsai#restore()`
@@ -82,8 +83,9 @@ var state = $('#list').bonsai('serialize');
 Restores the expanded/collapsed state of the list using the return value of `#serialize()`.
 
 ```js
-var state = $('#list').bonsai('serialize');
+var bonsai = $('#list').data('bonsai');
+var state = bonsai.serialize();
 // do stuff that changes the DOM, and may not retain collapsed state
-$('#list').bonsai('update'); // update to handle any new DOM elements
-$('#list').bonsai('restore', state); // restores the collapsed state
+bonsai.update(); // update to handle any new DOM elements
+bonsai.restore(state); // restores the collapsed state
 ```
