@@ -1,5 +1,7 @@
 # jQuery Bonsai
 
+#### [Visit project page and demos](http://aexmachina.info/jquery-bonsai)
+
 `jquery-bonsai` is a lightweight jQuery plugin that takes a big nested list and prunes it down to a small expandable 
 tree control.
 
