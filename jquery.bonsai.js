@@ -203,7 +203,7 @@
         // select all duplicate checkboxes that need to be updated
         var selector = 'input[type=checkbox]'
             + '[value="' + checkbox.val() + '"]'
-            + '[name="' + checkbox.attr('name') + '"]'
+            + (checkbox.attr('name') ? '[name="' + checkbox.attr('name') + '"]' : '')
             + (checkbox.prop('checked') ? ':not(:checked)' : ':checked');
         self.el.find(selector).prop({
           checked: checkbox.prop('checked'),
@@ -272,8 +272,7 @@
               checked: true,
               indeterminate: false
             });
-          })
-      )
+          }))
         .append('<i class="separator"></i>')
         .append($('<a class="none">Select none</a>')
           .css('cursor', 'pointer')
