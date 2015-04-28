@@ -205,9 +205,9 @@
       children.remove();
       listItem.append(checkbox)
         .append(
-          $('<label for="' + id + '">').append(text ? text : children.first())
+          $('<label for="' + id + '">').append(text.length > 0 ? text : children.first())
         )
-        .append(text ? children : children.slice(1));
+        .append(text.length > 0 ? children : children.slice(1));
     },
     handleDuplicates: function() {
       var self = this;
