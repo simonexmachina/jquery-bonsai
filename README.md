@@ -34,16 +34,18 @@ $('#list').bonsai({
   addSelectAll: false, // add a link to select all checkboxes
   selectAllExclude: null, // a filter selector or function for selectAll
 
-  checkboxes: false, // requires jquery.qubit
-  // createCheckboxes: creates checkboxes for each list item.
+  // createInputs: create checkboxes or radio buttons for each list item
+  // using a value of "checkbox" or "radio".
   //
-  // The name and value for the checkboxes can be declared in the
+  // The name and value for the inputs can be declared in the
   // markup using `data-name` and `data-value`.
   //
   // The name is inherited from parent items if not specified.
   //
   // Checked state can be indicated using `data-checked`.
-  createCheckboxes: false,
+  createInputs: false,
+  // checkboxes: run qubit(this.options) on the root node (requires jquery.qubit)
+  checkboxes: false,
   // handleDuplicateCheckboxes: update any other checkboxes that
   // have the same value
   handleDuplicateCheckboxes: false

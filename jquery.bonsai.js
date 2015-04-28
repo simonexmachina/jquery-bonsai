@@ -22,8 +22,22 @@
     addSelectAll: false, // add a link to select all checkboxes
     selectAllExclude: null, // a filter selector or function for selectAll
 
-    checkboxes: false, // requires jquery.qubit
-    // createCheckboxes: creates checkboxes for each list item.
+    // createInputs: create checkboxes or radio buttons for each list item
+    // by setting createInputs to "checkbox" or "radio".
+    //
+    // The name and value for the inputs can be declared in the
+    // markup using `data-name` and `data-value`.
+    //
+    // The name is inherited from parent items if not specified.
+    //
+    // Checked state can be indicated using `data-checked`.
+    createInputs: false,
+    // checkboxes: run qubit(this.options) on the root node (requires jquery.qubit)
+    checkboxes: false,
+    // handleDuplicateCheckboxes: update any other checkboxes that
+    // have the same value
+    handleDuplicateCheckboxes: false,
+    // createRadioButtons: creates radio buttons for each list item.
     //
     // The name and value for the checkboxes can be declared in the
     // markup using `data-name` and `data-value`.
@@ -31,10 +45,7 @@
     // The name is inherited from parent items if not specified.
     //
     // Checked state can be indicated using `data-checked`.
-    createCheckboxes: false,
-    // handleDuplicateCheckboxes: update any other checkboxes that
-    // have the same value
-    handleDuplicateCheckboxes: false
+    createRadioButtons: false
   };
   var Bonsai = function(el, options) {
     var self = this;
@@ -48,6 +59,7 @@
 
     this.update();
     if (this.isRootNode()) {
+      if (this.options.createCheckboxes) this.createInputs = 'checkbox';
       if (this.options.handleDuplicateCheckboxes) this.handleDuplicates();
       if (this.options.checkboxes) this.el.qubit(this.options);
       if (this.options.addExpandAll) this.addExpandAllLink();
@@ -112,7 +124,8 @@
       // look for a nested list (if any)
       this.el.children().each(function() {
         var item = $(this);
-        if (self.options.createCheckboxes) self.insertCheckbox(item);
+        if (self.options.createInputs) self.insertInput(item);
+
         // insert a thumb if it doesn't already exist
         if (item.children().filter('.thumb').length == 0) {
           var thumb = $('<div class="thumb"></div>');
@@ -175,10 +188,11 @@
         }
       });
     },
-    insertCheckbox: function(listItem) {
-      if (listItem.find('> input[type=checkbox]').length) return;
+    insertInput: function(listItem) {
+      var type = this.options.createInputs;
+      if (listItem.find('> input[type=' + type + ']').length) return;
       var id = this.checkboxId(listItem),
-          checkbox = $('<input type="checkbox" name="'
+          checkbox = $('<input type="' + type + '" name="'
             + this.getCheckboxName(listItem) + '" id="' + id + '" /> '
           ),
           children = listItem.children(),
