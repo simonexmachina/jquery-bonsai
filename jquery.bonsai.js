@@ -202,7 +202,7 @@
           }).first();
       checkbox.val(listItem.data('value'));
       checkbox.prop('checked', listItem.data('checked'))
-      children.remove();
+      children.detach();
       listItem.append(checkbox)
         .append(
           $('<label for="' + id + '">').append(text.length > 0 ? text : children.first())
