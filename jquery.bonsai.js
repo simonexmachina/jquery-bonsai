@@ -21,7 +21,7 @@
     addExpandAll: false, // add a link to expand all items
     addSelectAll: false, // add a link to select all checkboxes
     selectAllExclude: null, // a filter selector or function for selectAll
-    guid: null, // optional fixed gui to allow for persistence
+    guid: null, // optional fixed guid to allow for persistence
 
     checkboxes: false, // requires jquery.qubit
     // createCheckboxes: creates checkboxes for each list item.
