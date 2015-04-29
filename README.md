@@ -33,6 +33,7 @@ $('#list').bonsai({
   addExpandAll: false, // add a link to expand all items
   addSelectAll: false, // add a link to select all checkboxes
   selectAllExclude: null, // a filter selector or function for selectAll
+  guid: null, // optional guid to support persisting the tree state
 
   // createInputs: create checkboxes or radio buttons for each list item
   // using a value of "checkbox" or "radio".
@@ -70,6 +71,18 @@ $('#list').bonsai('update');
 
 ```js
 $('#list').bonsai('expand', listItem);
+```
+
+### `Bonsai#setSelected( id, state )`
+
+Sets the selected state (indicated by CSS class `selected`) on the item with the specified `id`.
+Also expands the subtree holding the selected list item to make it visible.
+
+The identify of the list item is based on the `id` or `data-bonsai-id` attribute.
+
+```js
+var bonsai = $('#list').data('bonsai');
+bonsai.setSelected( '007', true );
 ```
 
 ### `Bonsai#serialize()`

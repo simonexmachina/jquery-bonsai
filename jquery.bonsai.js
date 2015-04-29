@@ -189,6 +189,21 @@
         }
       });
     },
+    setSelected: function( id, selected ) {
+      var self = this;
+
+      var $li = self.el.find( '#' + id );
+      if ( $li.length == 0 ) {
+          $li = self.el.find( '#' + this.specifiedIdPrefix + id );
+      }
+      if ( $li.length > 0 ) {
+          $li.parents( 'li' ).each( function() {
+              self.setExpanded( $(this), selected );
+              $(this).toggleClass( 'selected', selected );
+          });
+          $li.toggleClass( 'selected', selected );
+      }
+    },
     insertInput: function(listItem) {
       var type = this.options.createInputs;
       if (listItem.find('> input[type=' + type + ']').length) return;
