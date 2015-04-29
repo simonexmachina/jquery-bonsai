@@ -21,6 +21,7 @@
     addExpandAll: false, // add a link to expand all items
     addSelectAll: false, // add a link to select all checkboxes
     selectAllExclude: null, // a filter selector or function for selectAll
+    guid: null, // optional fixed guid to allow for persistence
 
     // createInputs: create checkboxes or radio buttons for each list item
     // by setting createInputs to "checkbox" or "radio".
@@ -53,7 +54,7 @@
     this.options = $.extend({}, $.bonsai.defaults, options);
     this.el = $(el).addClass('bonsai').data('bonsai', this);
 
-    this.guid = Math.round(Math.random()*1e8);
+    this.guid = ( this.options.guid ? this.options.guid : Math.round(Math.random()*1e8) );
     this.generatedIdPrefix = 'bonsai-generated-' + this.guid + '-';
     this.specifiedIdPrefix = 'bonsai-specified-' + this.guid + '-';
 
