@@ -33,7 +33,6 @@ $('#list').bonsai({
   addExpandAll: false, // add a link to expand all items
   addSelectAll: false, // add a link to select all checkboxes
   selectAllExclude: null, // a filter selector or function for selectAll
-  guid: null, // optional guid to support persisting the tree state
 
   // createInputs: create checkboxes or radio buttons for each list item
   // using a value of "checkbox" or "radio".
@@ -73,31 +72,20 @@ $('#list').bonsai('update');
 $('#list').bonsai('expand', listItem);
 ```
 
-### `Bonsai#setSelected( id, state )`
+### `Bonsai#serialize(idAttr = 'id')`
 
-Sets the selected state (indicated by CSS class `selected`) on the item with the specified `id`.
-Also expands the subtree holding the selected list item to make it visible.
-
-The identify of the list item is based on the `id` or `data-bonsai-id` attribute.
-
-```js
-var bonsai = $('#list').data('bonsai');
-bonsai.setSelected( '007', true );
-```
-
-### `Bonsai#serialize()`
-
-Returns an object representing the expanded/collapsed state of the list.
-The identify of the list items for serialize and restore is based on the `id` or `data-bonsai-id` attributes.
+Returns an object representing the expanded/collapsed state of the list, using the items' id 
+(or the attribute specified by `idAttr`) to identify the list items.
 
 ```js
 var bonsai = $('#list').data('bonsai');
 var state = bonsai.serialize();
 ```
 
-### `Bonsai#restore()`
+### `Bonsai#restore(idAttr = 'id')`
 
-Restores the expanded/collapsed state of the list using the return value of `#serialize()`.
+Restores the expanded/collapsed state of the list using the return value of `#serialize()`. 
+The `idAttr` argument must be the same as in the call to `#serialize()`.
 
 ```js
 var bonsai = $('#list').data('bonsai');
