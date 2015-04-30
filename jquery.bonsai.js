@@ -21,7 +21,6 @@
     addExpandAll: false, // add a link to expand all items
     addSelectAll: false, // add a link to select all checkboxes
     selectAllExclude: null, // a filter selector or function for selectAll
-    guid: null, // optional guid to support persisting the tree state
 
     // createInputs: create checkboxes or radio buttons for each list item
     // by setting createInputs to "checkbox" or "radio".
@@ -54,10 +53,6 @@
     this.options = $.extend({}, $.bonsai.defaults, options);
     this.el = $(el).addClass('bonsai').data('bonsai', this);
 
-    this.options.guid = this.options.guid || Math.round(Math.random() * 1e8);
-    this.generatedIdPrefix = 'bonsai-generated-' + this.options.guid + '-';
-    this.specifiedIdPrefix = 'bonsai-specified-' + this.options.guid + '-';
-
     // store the scope in the options for child nodes
     if (!this.options.scope) {
       this.options.scope = this.el;
@@ -65,7 +60,7 @@
     this.update();
     if (this.isRootNode()) {
       if (this.options.createCheckboxes) this.createInputs = 'checkbox';
-      if (this.options.handleDuplicateCheckboxes) this.handleDuplicates();
+      if (this.options.handleDuplicateCheckboxes) this.handleDuplicateCheckboxes();
       if (this.options.checkboxes) this.el.qubit(this.options);
       if (this.options.addExpandAll) this.addExpandAllLink();
       if (this.options.addSelectAll) this.addSelectAllLink();
@@ -104,8 +99,7 @@
       }
       if (expanded) {
         if (!listItem.data('subList')) return;
-        listItem = $(listItem).addClass('expanded')
-          .removeClass('collapsed');
+        listItem = $(listItem).addClass('expanded').removeClass('collapsed');
         $(listItem.data('subList')).css('height', 'auto');
       }
       else {
@@ -157,34 +151,30 @@
 
       this.expand = this.options.expand || this.expand;
       this.collapse = this.options.collapse || this.collapse;
-
-      this.el.find('li').toArray().forEach(function(li) {
-        // liId writes the id to the actual id attribute
-        self.liId($(li));
-      });
     },
-    serialize: function() {
-      var self = this;
-
+    serialize: function(idAttr) {
+      idAttr = idAttr || 'id';
       return this.el.find('li').toArray().reduce(function(acc, li) {
         var $li = $(li);
-        var state =
-              $li.hasClass('expanded') ? 'expanded' :
-              $li.hasClass('collapsed') ? 'collapsed' :
-              null;
-
-        acc[self.liId($li)] = state;
+        var id = $li.attr(idAttr);
+        // only items with IDs can be serialized
+        if (id) {
+          var state = $li.hasClass('expanded')
+              ? 'expanded'
+              : ($li.hasClass('collapsed') ? 'collapsed' : null);
+          if (state) acc[id] = state;
+        }
         return acc;
       }, {});
     },
-    restore: function(state) {
+    restore: function(state, idAttr) {
+      idAttr = idAttr || 'id';
       var self = this;
-
-      Object.keys(state).forEach(function(key) {
-        var $li = self.el.find('#' + key);
-        if (state[key] === 'expanded') {
+      Object.keys(state).forEach(function(id) {
+        var $li = self.el.find('[' + idAttr + '="' + id + '"]');
+        if (state[id] === 'expanded') {
           self.expand($li);
-        } else if (state[key] === 'collapsed') {
+        } else if (state[id] === 'collapsed') {
           self.collapse($li);
         }
       });
@@ -192,15 +182,15 @@
     insertInput: function(listItem) {
       var type = this.options.createInputs;
       if (listItem.find('> input[type=' + type + ']').length) return;
-      var id = this.checkboxId(listItem),
-          checkbox = $('<input type="' + type + '" name="'
-            + this.getCheckboxName(listItem) + '" id="' + id + '" /> '
-          ),
-          children = listItem.children(),
-          // get the first text node for the label
-          text = listItem.contents().filter(function() {
-            return this.nodeType == 3;
-          }).first();
+      var id = this.inputIdFor(listItem);
+      var checkbox = $('<input type="' + type + '" name="'
+        + this.inputNameFor(listItem) + '" id="' + id + '" /> '
+      );
+      var children = listItem.children();
+      // get the first text node for the label
+      var text = listItem.contents().filter(function() {
+        return this.nodeType == 3;
+      }).first();
       checkbox.val(listItem.data('value'));
       checkbox.prop('checked', listItem.data('checked'))
       children.detach();
@@ -210,67 +200,54 @@
         )
         .append(text.length > 0 ? children : children.slice(1));
     },
-    handleDuplicates: function() {
+    checkboxPrefix: 'bonsai-checkbox-',
+    inputIdFor: function(listItem) {
+      var id;
+      do {
+        id = this.checkboxPrefix + Bonsai.uniqueId++;
+      }
+      while ($('#' + id).length > 0);
+      return id;
+    },
+    inputNameFor: function(listItem) {
+      return listItem.data('name')
+        || listItem.parents().filter('[data-name]').data('name');
+    },
+    handleDuplicateCheckboxes: function() {
       var self = this;
       self.el.on('change', 'input[type=checkbox]', function(ev) {
         var checkbox = $(ev.target);
         if (!checkbox.val()) return;
         // select all duplicate checkboxes that need to be updated
         var selector = 'input[type=checkbox]'
-            + '[value="' + checkbox.val() + '"]'
-            + (checkbox.attr('name') ? '[name="' + checkbox.attr('name') + '"]' : '')
-            + (checkbox.prop('checked') ? ':not(:checked)' : ':checked');
+          + '[value="' + checkbox.val() + '"]'
+          + (checkbox.attr('name') ? '[name="' + checkbox.attr('name') + '"]' : '')
+          + (checkbox.prop('checked') ? ':not(:checked)' : ':checked');
         self.el.find(selector).prop({
           checked: checkbox.prop('checked'),
           indeterminate: checkbox.prop('indeterminate')
         }).trigger('change');
       });
     },
-    checkboxPrefix: 'checkbox-',
-    liId: function(listItem) {
-      var id = listItem.attr('id');
-      var dataId = listItem.attr('data-bonsai-id');
-
-      if (id) {
-        // noop
-      } else if (dataId) {
-        id = this.specifiedIdPrefix + dataId;
-      } else {
-        do {
-          id = this.generatedIdPrefix + Bonsai.uniqueId++;
-        }
-        while($('#' + id).length > 0);
-      }
-
-      listItem.attr('id', id);
-      return id;
-    },
-    checkboxId: function(listItem) {
-      return this.checkboxPrefix + this.liId(listItem);
-    },
-    getCheckboxName: function(listItem) {
-      return listItem.data('name')
-        || listItem.parents().filter('[data-name]').data('name');
-    },
     addExpandAllLink: function() {
       var self = this;
       $('<div class="expand-all">')
-        .append($('<a class="all">Expand all</a>')
-          .on('click', function() {
+        .append(
+          $('<a class="all">Expand all</a>').on('click', function() {
             self.expandAll();
           })
         )
         .append('<i class="separator"></i>')
-        .append($('<a class="none">Collapse all</a>')
-          .on('click', function() {
+        .append(
+          $('<a class="none">Collapse all</a>').on('click', function() {
             self.collapseAll();
           })
         )
         .insertBefore(this.el);
     },
     addSelectAllLink: function() {
-      var scope = this.options.scope,
-          self = this;
+      var scope = this.options.scope;
+      var self = this;
       function getCheckboxes() {
         // return all checkboxes that are not in hidden list items
         return scope.find('li')
