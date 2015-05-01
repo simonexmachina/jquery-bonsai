@@ -114,6 +114,16 @@
     collapseAll: function() {
       this.collapse(this.el.find('li'));
     },
+    expandTo: function (id, idAttr) {
+      idAttr = idAttr || 'id';
+      var self = this;
+
+      var $li = self.el.find('[' + idAttr + '="' + id + '"]');
+      $li.parents('li').each(function () {
+        self.expand($(this));
+      });
+      return $li;
+    },
     update: function() {
       var self = this;
       // look for a nested list (if any)
@@ -178,21 +188,6 @@
           self.collapse($li);
         }
       });
-    },
-    setSelected: function( id, selected ) {
-      var self = this;
-
-      var $li = self.el.find( '#' + id );
-      if ( $li.length == 0 ) {
-          $li = self.el.find( '#' + this.specifiedIdPrefix + id );
-      }
-      if ( $li.length > 0 ) {
-          $li.parents( 'li' ).each( function() {
-              self.setExpanded( $(this), selected );
-              $(this).toggleClass( 'selected', selected );
-          });
-          $li.toggleClass( 'selected', selected );
-      }
     },
     insertInput: function(listItem) {
       var type = this.options.createInputs;
