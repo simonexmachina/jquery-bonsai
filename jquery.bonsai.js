@@ -114,6 +114,16 @@
     collapseAll: function() {
       this.collapse(this.el.find('li'));
     },
+    expandTo: function (id, idAttr) {
+      idAttr = idAttr || 'id';
+      var self = this;
+
+      var $li = self.el.find('[' + idAttr + '="' + id + '"]');
+      $li.parents('li').each(function () {
+        self.expand($(this));
+      });
+      return $li;
+    },
     update: function() {
       var self = this;
       // look for a nested list (if any)

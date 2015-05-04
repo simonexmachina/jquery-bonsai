@@ -71,6 +71,15 @@ $('#list').bonsai('update');
 ```js
 $('#list').bonsai('expand', listItem);
 ```
+### `Bonsai#expandTo(id, idAttr = 'id')`
+
+Expands a subtree up to the item identified by the items' id (or the attribute specified by `idAttr`) 
+and returns the listItem for further processing.
+
+```js
+var bonsai = $('#list').data('bonsai');
+var $li = bonsai.expandTo(id);
+```
 
 ### `Bonsai#serialize(idAttr = 'id')`
 
