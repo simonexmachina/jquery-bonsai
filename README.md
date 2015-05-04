@@ -33,6 +33,7 @@ $('#list').bonsai({
   addExpandAll: false, // add a link to expand all items
   addSelectAll: false, // add a link to select all checkboxes
   selectAllExclude: null, // a filter selector or function for selectAll
+  idAttribute: 'id', // which attribute of the list items to use as an id
 
   // createInputs: create checkboxes or radio buttons for each list item
   // using a value of "checkbox" or "radio".
@@ -60,41 +61,43 @@ If the DOM changes then you'll need to call `#update`:
 $('#list').bonsai('update');
 ```
 
-### Expanding/collapsing items
+### `Bonsai#listItem(id)`
+
+Return a jQuery object containing the `<li>` with the specified `id`.
+
+### Expanding/collapsing a single items
 
 - `Bonsai#expand(listItem)`
 - `Bonsai#collapse(listItem)`
 - `Bonsai#toggle(listItem)`
-- `Bonsai#expandAll(listItem)`
-- `Bonsai#collapseAll(listItem)`
-
-```js
-$('#list').bonsai('expand', listItem);
-```
-### `Bonsai#expandTo(id, idAttr = 'id')`
-
-Expands a subtree up to the item identified by the items' id (or the attribute specified by `idAttr`) 
-and returns the listItem for further processing.
+- `Bonsai#expandTo(listItem)`
 
 ```js
 var bonsai = $('#list').data('bonsai');
-var $li = bonsai.expandTo(id);
+bonsai.expand(listItem);
 ```
 
-### `Bonsai#serialize(idAttr = 'id')`
+All of these methods accept either a DOMElement, a jQuery object or an `id` and return a 
+jQuery object containing the list item.
 
-Returns an object representing the expanded/collapsed state of the list, using the items' id 
-(or the attribute specified by `idAttr`) to identify the list items.
+### Expanding/collapsing the whole tree
+
+- `Bonsai#expandAll(listItem)`
+- `Bonsai#collapseAll(listItem)`
+
+### `Bonsai#serialize()`
+
+Returns an object representing the expanded/collapsed state of the list, using the items' id
+to identify the list items.
 
 ```js
 var bonsai = $('#list').data('bonsai');
 var state = bonsai.serialize();
 ```
 
-### `Bonsai#restore(idAttr = 'id')`
+### `Bonsai#restore()`
 
-Restores the expanded/collapsed state of the list using the return value of `#serialize()`. 
-The `idAttr` argument must be the same as in the call to `#serialize()`.
+Restores the expanded/collapsed state of the list using the return value of `#serialize()`.
 
 ```js
 var bonsai = $('#list').data('bonsai');

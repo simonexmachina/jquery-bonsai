@@ -21,6 +21,7 @@
     addExpandAll: false, // add a link to expand all items
     addSelectAll: false, // add a link to select all checkboxes
     selectAllExclude: null, // a filter selector or function for selectAll
+    idAttribute: 'id', // which attribute of the list items to use as an id
 
     // createInputs: create checkboxes or radio buttons for each list item
     // by setting createInputs to "checkbox" or "radio".
@@ -74,39 +75,44 @@
     isRootNode: function() {
       return this.options.scope == this.el;
     },
+    listItem: function(id) {
+      if (typeof id === 'object') return $(id);
+      return this.el.find('[' + this.options.idAttribute + '="' + id + '"]');
+    },
     toggle: function(listItem) {
       if (!$(listItem).hasClass('expanded')) {
-        this.expand(listItem);
+        return this.expand(listItem);
       }
       else {
-        this.collapse(listItem);
+        return this.collapse(listItem);
       }
     },
     expand: function(listItem) {
-      this.setExpanded(listItem, true);
+      return this.setExpanded(listItem, true);
     },
     collapse: function(listItem) {
-      this.setExpanded(listItem, false);
+      return this.setExpanded(listItem, false);
     },
     setExpanded: function(listItem, expanded) {
-      listItem = $(listItem);
-      if (listItem.length > 1) {
+      var $li = this.listItem(listItem);
+      if ($li.length > 1) {
         var self = this;
-        listItem.each(function() {
+        $li.each(function() {
           self.setExpanded(this, expanded);
         });
         return;
       }
       if (expanded) {
-        if (!listItem.data('subList')) return;
-        listItem = $(listItem).addClass('expanded').removeClass('collapsed');
-        $(listItem.data('subList')).css('height', 'auto');
+        if (!$li.data('subList')) return;
+        $li = $($li).addClass('expanded').removeClass('collapsed');
+        $($li.data('subList')).css('height', 'auto');
       }
       else {
-        listItem = $(listItem).addClass('collapsed')
+        $li = $($li).addClass('collapsed')
           .removeClass('expanded');
-        $(listItem.data('subList')).height(0);
+        $($li.data('subList')).height(0);
       }
+      return $li;
     },
     expandAll: function() {
       this.expand(this.el.find('li'));
@@ -114,12 +120,9 @@
     collapseAll: function() {
       this.collapse(this.el.find('li'));
     },
-    expandTo: function (id, idAttr) {
-      idAttr = idAttr || 'id';
+    expandTo: function(listItem) {
       var self = this;
-
-      var $li = self.el.find('[' + idAttr + '="' + id + '"]');
-      $li.parents('li').each(function () {
+      var $li = this.listItem(listItem).parents('li').each(function () {
         self.expand($(this));
       });
       return $li;
@@ -162,8 +165,8 @@
       this.expand = this.options.expand || this.expand;
       this.collapse = this.options.collapse || this.collapse;
     },
-    serialize: function(idAttr) {
-      idAttr = idAttr || 'id';
+    serialize: function() {
+      var idAttr = this.options.idAttribute;
       return this.el.find('li').toArray().reduce(function(acc, li) {
         var $li = $(li);
         var id = $li.attr(idAttr);
@@ -172,22 +175,22 @@
           var state = $li.hasClass('expanded')
               ? 'expanded'
               : ($li.hasClass('collapsed') ? 'collapsed' : null);
-          if (state) acc[id] = state;
+          if (state) acc[$li.hasClass('expanded') ? 'expanded' : 'collapsed'].push(id);
         }
         return acc;
-      }, {});
+      }, {expanded: [], collapsed: [], version: 2});
     },
-    restore: function(state, idAttr) {
-      idAttr = idAttr || 'id';
+    restore: function(state) {
       var self = this;
-      Object.keys(state).forEach(function(id) {
-        var $li = self.el.find('[' + idAttr + '="' + id + '"]');
-        if (state[id] === 'expanded') {
-          self.expand($li);
-        } else if (state[id] === 'collapsed') {
-          self.collapse($li);
-        }
-      });
+      if (state.version > 1) {
+        state.expanded.map(this.expand.bind(this));
+        state.collapsed.map(this.collapse.bind(this));
+      }
+      else {
+        Object.keys(state).forEach(function(id) {
+          self.setExpanded(id, state[id] === 'expanded');
+        });
+      }
     },
     insertInput: function(listItem) {
       var type = this.options.createInputs;
