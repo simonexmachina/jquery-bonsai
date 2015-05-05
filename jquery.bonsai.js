@@ -122,7 +122,8 @@
     },
     expandTo: function(listItem) {
       var self = this;
-      var $li = this.listItem(listItem).parents('li').each(function () {
+      var $li = this.listItem(listItem);
+      $li.parents('li').each(function () {
         self.expand($(this));
       });
       return $li;
