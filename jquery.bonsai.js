@@ -216,11 +216,10 @@
     },
     checkboxPrefix: 'bonsai-checkbox-',
     inputIdFor: function(listItem) {
-      var id;
-      do {
+      var id = $(listItem).data('id');
+      while (!id || ($('#' + id).length > 0)) {
         id = this.checkboxPrefix + Bonsai.uniqueId++;
       }
-      while ($('#' + id).length > 0);
       return id;
     },
     inputNameFor: function(listItem) {

@@ -38,8 +38,8 @@ $('#list').bonsai({
   // createInputs: create checkboxes or radio buttons for each list item
   // using a value of "checkbox" or "radio".
   //
-  // The name and value for the inputs can be declared in the
-  // markup using `data-name` and `data-value`.
+  // The id, name and value for the inputs can be declared in the
+  // markup using `data-id`, `data-name` and `data-value`.
   //
   // The name is inherited from parent items if not specified.
   //
