@@ -7,7 +7,7 @@ tree control.
 
 Also includes support for checkboxes (including 'indeterminate' state) and for populating the tree using a JSON data source.
 
-See [aexmachina.github.io/jquery-bonsai/](http://aexmachina.github.io/jquery-bonsai/) for more information.
+See [http://simonwade.me/jquery-bonsai/](http://aexmachina.github.io/jquery-bonsai/) for more information.
 
 ## Installation
 
