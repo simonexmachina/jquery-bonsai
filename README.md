@@ -10,9 +10,14 @@ Also includes support for checkboxes (including 'indeterminate' state) and for p
 See [http://simonwade.me/jquery-bonsai/](http://simonwade.me/jquery-bonsai/) for more information.
 
 ## Installation
-
+bower
 ```
 bower install jquery-bonsai --save
+```
+
+npm
+```
+npm install jquery-bonsai --save
 ```
 
 ## Usage
