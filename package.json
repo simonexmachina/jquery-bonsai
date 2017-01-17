@@ -1,0 +1,25 @@
+{
+  "name": "jquery-bonsai",
+  "version": "2.1.2",
+  "description": "A lightweight jQuery plugin that takes a big nested list and prunes it down to a small expandable tree control.",
+  "main": "jquery.bonsai.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "dependencies": {
+    "jquery": "*",
+    "jquery-qubit": "^2.0.8"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/aexmachina/jquery-bonsai.git"
+  },
+  "author": [
+    "aexmachina"
+  ],
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/aexmachina/jquery-bonsai/issues"
+  },
+  "homepage": "https://github.com/aexmachina/jquery-bonsai#readme"
+}

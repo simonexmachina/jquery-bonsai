@@ -1,4 +1,12 @@
-(function($){
+(function(factory){
+  if (typeof define === 'function' && define.amd) {
+    define(['jquery', 'jquery-qubit'], factory);
+  } else if (typeof exports === 'object') {
+    factory(require('jquery'), require('jquery-qubit'));
+  } else {
+    factory(jQuery, jQuery.fn.qubit);
+  }
+}(function($, qubit) {
   $.fn.bonsai = function(options) {
     var args = arguments;
     return this.each(function() {
@@ -302,4 +310,4 @@
   $.extend(Bonsai, {
     uniqueId: 0
   });
-}(jQuery));
+}));
