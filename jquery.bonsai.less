@@ -1,0 +1,72 @@
+/* ported from jquery.bonsai.css and adapted for mobile use */
+
+/* Variables used:
+
+  @bonsai-breakpoint: @screen-sm-max;  // up to this screen size arrows will be on the right and touchable
+  @bonsai-left-indent: 20px;          // how much each level will be indented on the left
+  @bonsai-tap-width: 30px;            // width of tap area on the right
+
+*/
+
+.bonsai {
+
+  &, li {
+    margin: 0;
+    padding: 0;
+    list-style: none;
+    overflow: hidden;
+    position: relative;
+  }
+
+  a {
+    display: block;
+    padding: @padding-base-vertical 0;
+    @media screen and (max-width: @bonsai-breakpoint) {
+      padding: @padding-base-vertical @bonsai-tap-width @padding-base-vertical 0;
+    }
+  }
+
+  @media screen and (max-width: @bonsai-breakpoint) {
+    li li {
+        padding-left: @bonsai-left-indent;
+    }
+  }
+  @media screen and (min-width: (@bonsai-breakpoint + 1)) {
+    li {
+      padding-left: @bonsai-left-indent;
+    }
+  }
+
+  li > .thumb {
+    margin: @font-size-base/4 0 0 -1em; /* negative margin into the padding of the li */
+    position: absolute;
+    cursor: pointer;
+    @media screen and (max-width: @bonsai-breakpoint) {
+      margin: 0;
+      display: inline-block;
+      right: 0;
+      width: @bonsai-tap-width;
+      font-size: @font-size-base*1.5;
+      text-align: right;
+    }
+  }
+
+  li.has-children > .thumb:after {
+    content: '  ▸';
+  }
+
+  li.has-children.expanded > .thumb:after {
+    content: '  ▾';
+  }
+
+  li.collapsed > ol.bonsai {
+    height: 0;
+    overflow: hidden;
+  }
+
+  .all,
+  .none {
+    cursor: pointer;
+  }
+
+}
