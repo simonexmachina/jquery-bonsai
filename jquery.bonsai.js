@@ -136,6 +136,27 @@
       });
       return $li;
     },
+    getCheckboxes: function(listItem) {
+      // return all checkboxes that are not in hidden list items
+      var scope = listItem ? this.listItem(listItem) : this.options.scope;
+      return scope.find('li').andSelf()
+        .filter(this.options.selectAllExclude || function() {
+          return $(this).css('display') != 'none';
+        })
+        .find('> input[type=checkbox]');
+    },
+    selectAll: function(listItem) {
+      this.getCheckboxes(listItem).prop({
+        checked: true,
+        indeterminate: false
+      });
+    },
+    selectNone: function(listItem) {
+      this.getCheckboxes(listItem).prop({
+        checked: false,
+        indeterminate: false
+      });
+    },
     update: function() {
       var self = this;
       // look for a nested list (if any)
@@ -269,33 +290,20 @@
     addSelectAllLink: function() {
       var scope = this.options.scope;
       var self = this;
-      function getCheckboxes() {
-        // return all checkboxes that are not in hidden list items
-        return scope.find('li')
-          .filter(self.options.selectAllExclude || function() {
-            return $(this).css('display') != 'none';
-          })
-          .find('> input[type=checkbox]');
-      }
       $('<div class="check-all">')
         .append($('<a class="all">Select all</a>')
           .css('cursor', 'pointer')
           .on('click', function() {
-            getCheckboxes().prop({
-              checked: true,
-              indeterminate: false
-            });
-          }))
+            self.selectAll());
+          })
+        )
         .append('<i class="separator"></i>')
         .append($('<a class="none">Select none</a>')
           .css('cursor', 'pointer')
           .on('click', function() {
-            getCheckboxes().prop({
-              checked: false,
-              indeterminate: false
-            });
+            self.selectNone());
           })
-      )
+        )
         .insertAfter(this.el);
     },
     setCheckedValues: function(values) {
