@@ -1,13 +1,9 @@
 # jQuery Bonsai
 
-#### [Visit project page and demos](http://simonwade.me/jquery-bonsai)
-
 `jquery-bonsai` is a lightweight jQuery plugin that takes a big nested list and prunes it down to a small expandable 
 tree control.
 
 Also includes support for checkboxes (including 'indeterminate' state) and for populating the tree using a JSON data source.
-
-See [http://simonwade.me/jquery-bonsai/](http://simonwade.me/jquery-bonsai/) for more information.
 
 ## Installation
 bower
