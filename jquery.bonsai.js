@@ -113,12 +113,12 @@
       if (expanded) {
         if (!$li.data('subList')) return;
         $li = $($li).addClass('expanded').removeClass('collapsed');
-        $($li.data('subList')).css('height', 'auto');
+        $li.children().filter('ol, ul').css('height', 'auto');
       }
       else {
         $li = $($li).addClass('collapsed')
           .removeClass('expanded');
-        $($li.data('subList')).height(0);
+        $li.children().filter('ol, ul').height(0);
       }
       return $li;
     },
